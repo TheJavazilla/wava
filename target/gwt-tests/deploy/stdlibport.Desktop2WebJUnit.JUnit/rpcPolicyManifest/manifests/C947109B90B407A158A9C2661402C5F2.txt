@@ -1,2 +1,0 @@
-serviceClass: stdlibport.client.GreetingService
-path: E9113ADD0085915378B8983932DA3975.gwt.rpc

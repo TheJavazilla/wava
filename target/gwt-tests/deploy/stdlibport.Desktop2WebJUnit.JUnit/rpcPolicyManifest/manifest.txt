@@ -1,5 +1,0 @@
-# Module stdlibport.Desktop2WebJUnit.JUnit
-# RPC service class, partial path of RPC policy file
-com.google.gwt.logging.shared.RemoteLoggingService, 8C60C75F6B7DEA6E5ED4AE57614680B1.gwt.rpc
-stdlibport.client.GreetingService, E9113ADD0085915378B8983932DA3975.gwt.rpc
-com.google.gwt.junit.client.impl.JUnitHost, 96393FD5B90EFD77EACE5B4F721C3D47.gwt.rpc
