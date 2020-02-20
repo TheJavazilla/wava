@@ -2,8 +2,8 @@
 /target/extras/
 /target/generated-sources/
 /target/gwt/
-/target/gwt-test/
-/target/gwt-unitCashe/
+/target/gwt-tests/
+/target/gwt-unitCache/
 /target/maven-archiver/
 /target/maven-status/
 /target/surefire-reports/

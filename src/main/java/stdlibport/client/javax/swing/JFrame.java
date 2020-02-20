@@ -13,7 +13,8 @@ public class JFrame extends JComponent {
     public JFrame(String string) {
         super();
         gwt = new DialogBox();
-        ((DialogBox)gwt).setAnimationEnabled(true);
+        //((DialogBox)gwt).setAnimationEnabled(true);
+        //gwt = new FlowPanel();
         setTitle(string);
     }
 
@@ -28,6 +29,7 @@ public class JFrame extends JComponent {
     public void setContentPane(JComponent p) {
         this.contentPane = p;
         ((DialogBox)gwt).setWidget(p.gwt);
+        
     }
 
     public JComponent getContentPane() {

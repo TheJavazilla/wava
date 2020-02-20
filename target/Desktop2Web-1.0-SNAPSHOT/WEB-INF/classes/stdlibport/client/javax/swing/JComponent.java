@@ -1,14 +1,31 @@
 package stdlibport.client.javax.swing;
 
-import stdlibport.client.java.awt.event.MouseAdapter;
+import stdlibport.client.java.awt.event.MouseEvent;
 
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.FontStyle;
+import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.MouseDownEvent;
+import com.google.gwt.event.dom.client.MouseDownHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
+import com.google.gwt.event.dom.client.MouseOverEvent;
+import com.google.gwt.event.dom.client.MouseOverHandler;
+import com.google.gwt.event.dom.client.MouseUpEvent;
+import com.google.gwt.event.dom.client.MouseUpHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 
 import stdlibport.client.java.awt.Dimension;
+import stdlibport.client.java.awt.Font;
+import stdlibport.client.java.awt.event.MouseListener;
 import stdlibport.client.java.awt.Point;
 import stdlibport.client.javax.swing.border.Border;
+import stdlibport.client.tv.fungus.ShowPanel;
 import stdlibport.client.java.awt.Color;
 import stdlibport.client.java.awt.Component;
 
@@ -33,7 +50,31 @@ public class JComponent extends Component {
         gwt.setSize(w + "px", h + "px");
     }
     
+    public void setMinimumSize(Dimension dimension) {
+        setSize(dimension); // TODO
+    }
+
+    public void setMaximumSize(Dimension dimension) {
+        setSize(dimension); // TODO
+    }
+
+    public void setPreferedSize(Dimension dimension) {
+        setSize(dimension); // TODO
+    }
+    
     public Dimension getSize() {
+        return new Dimension(width, height);
+    }
+
+    public Dimension getMaximumSize() {
+        return new Dimension(width, height);
+    }
+
+    public Dimension getMinimumSize() {
+        return new Dimension(width, height);
+    }
+
+    public Dimension getPreferedSize() {
         return new Dimension(width, height);
     }
 
@@ -90,7 +131,75 @@ public class JComponent extends Component {
         gwt.getElement().getStyle().setBackgroundColor("rgb(" + c.getRed() + "," + c.getGreen() + "," + c.getBlue() + ")");
     }
 
-    public void addMouseListener(MouseAdapter mouseAdapter) {
+    public void addMouseListener(MouseListener ml) {
+        class MyHandler implements ClickHandler, MouseDownHandler, MouseUpHandler, MouseOverHandler, MouseOutHandler {
+            @Override
+            public void onClick(ClickEvent event) {
+                ml.mouseClicked(MouseEvent.fromGWT(event));
+            }
+
+            @Override
+            public void onMouseOut(MouseOutEvent event) {
+                ml.mouseExited(MouseEvent.fromGWT(event));
+            }
+
+            @Override
+            public void onMouseOver(MouseOverEvent event) {
+                ml.mouseEntered(MouseEvent.fromGWT(event));
+            }
+
+            @Override
+            public void onMouseUp(MouseUpEvent event) {
+                ml.mouseReleased(MouseEvent.fromGWT(event));
+            }
+
+            @Override
+            public void onMouseDown(MouseDownEvent event) {
+                ml.mousePressed(MouseEvent.fromGWT(event));
+            }
+        }
+        //MyHandler mh = new MyHandler();
+        ClickHandler mh = new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                ml.mouseClicked(MouseEvent.fromGWT(event));
+              }
+            };
+        //gwt.addHandler(mh, ClickEvent.getType());
+        if (gwt instanceof Button)
+            ((Button)gwt).addClickHandler(mh);
+        else gwt.addHandler(mh, ClickEvent.getType());
+
+        //gwt.addHandler(mh, ClickEvent.getType());
+        //gwt.addHandler(mh, MouseDownEvent.getType());
+        //gwt.addHandler(mh, MouseUpEvent.getType());
+        //gwt.addHandler(mh, MouseOverEvent.getType());
+        //gwt.addHandler(mh, MouseOutEvent.getType());
+    }
+    
+    public Font getFont() {
+        return Font.fromGWT(gwt.getElement().getStyle());
+    }
+
+    public void setFont(Font font) {
+        int size = font.getSize();
+        int style = font.getStyle();
+        Style s = gwt.getElement().getStyle();
+        s.setFontSize(size, Unit.PX);
+        switch (style) {
+            case 0: // PLAIN
+                s.setFontStyle(FontStyle.NORMAL);
+                s.setFontWeight(FontWeight.NORMAL);
+                break;
+            case 1: // BOLD
+                s.setFontWeight(FontWeight.BOLD);
+                break;
+            case 2: // ITALIC
+                s.setFontStyle(FontStyle.ITALIC);
+                break;
+        }
+    }
+
+    public void setOpaque(boolean b) {
         // TODO Auto-generated method stub
     }
 

@@ -2,191 +2,156 @@ package stdlibport.client.tv.fungus;
 
 import stdlibport.client.java.awt.Color;
 import stdlibport.client.java.awt.Dimension;
-import stdlibport.client.java.awt.Font;
-import stdlibport.client.java.awt.Graphics;
 import stdlibport.client.java.awt.GridLayout;
 import stdlibport.client.java.awt.Image;
 import stdlibport.client.java.awt.event.MouseAdapter;
 import stdlibport.client.java.awt.event.MouseEvent;
-import stdlibport.client.java.awt.image.BufferedImage;
-import java.util.HashMap;
-
-import com.google.gwt.dom.client.Style.Unit;
-
-import stdlibport.client.javax.imageio.ImageIO;
+import stdlibport.client.javax.swing.BorderFactory;
 import stdlibport.client.javax.swing.ImageIcon;
 import stdlibport.client.javax.swing.JFrame;
 import stdlibport.client.javax.swing.JLabel;
 import stdlibport.client.javax.swing.JPanel;
 import stdlibport.client.javax.swing.JScrollPane;
 import stdlibport.client.javax.swing.Timer;
-import stdlibport.client.tv.fungus.ShowPanel.ImageType;
-
-import static stdlibport.client.tv.fungus.ShowPanel.ImageType.*;
+import stdlibport.client.tv.fungus.shows.AOK;
+import stdlibport.client.tv.fungus.shows.AdamRuinsEverything;
+import stdlibport.client.tv.fungus.shows.Arthur;
+import stdlibport.client.tv.fungus.shows.Batman;
+import stdlibport.client.tv.fungus.shows.BikiniBottomMysteries;
+import stdlibport.client.tv.fungus.shows.CheddarExplains;
+import stdlibport.client.tv.fungus.shows.ForensicFiles;
+import stdlibport.client.tv.fungus.shows.Heman;
+import stdlibport.client.tv.fungus.shows.Infowars;
+import stdlibport.client.tv.fungus.shows.LGRThrifts;
+import stdlibport.client.tv.fungus.shows.LooneyTunes;
+import stdlibport.client.tv.fungus.shows.Oggy;
+import stdlibport.client.tv.fungus.shows.OmNom;
+import stdlibport.client.tv.fungus.shows.PinkPanther;
+import stdlibport.client.tv.fungus.shows.Spongebob;
+import stdlibport.client.tv.fungus.shows.StudioC;
+import stdlibport.client.tv.fungus.shows.Techquickie;
+import stdlibport.client.tv.fungus.shows.TomAndJerry;
+import stdlibport.client.tv.fungus.shows.TwoCents;
+import stdlibport.client.tv.fungus.shows.UnsolvedMysteries;
+import stdlibport.client.tv.fungus.shows.WoodyWoodpecker;
 
 public class IsaiahTv extends JFrame {
 
     public static IsaiahTv inst;
     public static String path = "F:\\";
-    public int h=0,j=0;
-    public static HashMap<String, BufferedImage> map = new HashMap<>();
+    private Timer t;
 
     public boolean DEBUG = false;
-    public static boolean loading = false;
-    Color c = new Color(255, 255, 255);
+    private JPanel p;
 
     public IsaiahTv() {
         inst = this;
         JPanel menu = getMenu();
         JPanel p = new JPanel();
+
         p.setPreferredSize(new Dimension(1024, 600));
         p.setBackground(Color.WHITE);
 
-        JLabel name = (JLabel)p.add(new JLabel(new ImageIcon(image("title.png", true))));
-        JLabel des = (JLabel)p.add(new JLabel("Portable Streaming on USB. Now on the web!"));
-        des.setFont(des.getFont().deriveFont(24f));
+        JLabel name = (JLabel)p.add(new JLabel("FungusTV"));
+        JLabel des = (JLabel)p.add(new JLabel("Free Streaming Made Possible"));
+        name.gwt.setPixelSize(100, 100);
+        //name.setFont(name.getFont().deriveFont(114f));
+        //des.setFont(des.getFont().deriveFont(32f));
+        name.setFontSize(114);
+        des.setFontSize(32);
 
-        name.setVisible(false);
         des.setVisible(false);
 
         setContentPane(p);
 
         setDefaultCloseOperation(3);
-        this.setSize(1024, 600);
+        this.setSize(1054, 640);
         this.setLocationRelativeTo(null);
         setVisible(true);
+        
+        Timer locFix = new Timer(10, a -> name.setLocation((getWidth()/2)-name.getSize().width/2-4, (getHeight()/2)-(name.getSize().height+20)));
+        locFix.start();
 
-        Timer t = new Timer(10, a -> {
-            name.setVisible(true);
-            name.setLocation((getWidth()/2)-350, getHeight()-(10+h));
-            if (name.getLocation().y > (getHeight()/2)-(name.getSize().height+20)) {
-                if (h>250)
-                    h += 8;
-                else if (h>150)
-                    h += 14;
-                else h+= 18;
-            }
-            if(j > 100) {
-                des.setForeground(c);
-                Color d = c;
-                if (c.getRed() > 1) {
-                    double s = Math.random();
-                    int u = s < 0.7 ? 2 : 1;
-                    d = c = new Color(c.getRed() - u, c.getGreen() - u, c.getBlue() - u);
-                }
-                des.setForeground(d);
-                des.validate();
-                des.setLocation((getWidth()/2)-200, (getHeight() - h) + 150);
-                des.setVisible(true);
-            }
-            j++;
+        t = new Timer(10, a -> {
+            if (locFix.gwt.isRunning())
+                locFix.gwt.cancel();
+
+            name.setLocation((getWidth()/2)-(250), (getHeight()/2)-(114+20));
+
+            des.setForeground(Color.BLACK);
+            des.setLocation(getWidth()/2 - 215, getHeight()/2);
+            des.setVisible(true);
         });
-        t.setInitialDelay(400);
+        t.setInitialDelay(500);
         t.setRepeats(true);
         t.start();
 
-        /*try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(path + "\\videos\\output_free.wav"));
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
-        } catch (Exception e) {}*/
-
-        Timer timer = new Timer(DEBUG ? 200 : 8000, a -> {
+        Timer timer = new Timer(4000, a -> {
             setContentPane(new JScrollPane(menu));
             validate();
         });
-
         timer.setRepeats(false);
         timer.start();
 
-        setTitle("FungusTV by Isaiah");
+        setTitle("FungusTV - Free Streaming Made Possible");
     }
 
     public Image image(String s, boolean cl) {
-        //try {
-            //return cl ? ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(s)) : ImageIO.read(new File(s));
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-            //return null;
-        //}
-        return ImageIO.gwtDebug(s);
+        return new Image(s);
     }
 
     public JPanel getMenu() {
-        JPanel p = new JPanel() {
-            @Override
-            public void paint(Graphics g) {
-                super.paint(g);
-                if (loading) {
-                    Font f = g.getFont();
-                    g.setFont(f.deriveFont(68f));
-                    g.setColor(new Color(10, 10, 10, 150));
-                    g.fillRect(0, 0, getWidth(), getHeight());
-                    g.setColor(Color.LIGHT_GRAY);
+        p = new JPanel();
+        p.setLayout(new GridLayout(0,5));
+        //TitledBorder t = BorderFactory.createTitledBorder("All Shows");
+        //t.setTitleFont(t.getTitleFont().deriveFont(14f));
+        //p.setBorder(BorderFactory.createCompoundBorder(t, BorderFactory.createEmptyBorder(12,8,32,8)));
 
-                    g.drawString("Loading...", getWidth()/2 - 130, getHeight()/2 - 32);
-                    g.setFont(f);
-                }
-                g.drawString("(C) 2019 by Isaiah. Released under the Unlicence", getWidth() - 280, getHeight() - 12);
-                repaint();
-            }
-        };
-        GridLayout grid = new GridLayout(0,4);
-        grid.gwt().getElement().getStyle().setPadding(6, Unit.PX);
-        grid.gwt().getElement().getStyle().setPaddingRight(24, Unit.PX);
-        p.setLayout(grid);
-        
-        //TitledBorder t = BorderFactory.createTitledBorder("Your viewing All Shows on FungusTV");
-        //t.setTitleFont(t.getTitleFont().deriveFont(16f));
-        //p.setBorder(BorderFactory.createCompoundBorder(t, BorderFactory.createEmptyBorder(8,10,10,10)));
-
-        p.add(getShow("Scooby doo - Whats New Scooby Doo", dailymotion));
-        p.add(getShow("Loney tunes", PublicDomain));
-        p.add(getShow("New Looney Tunes", boomerang));
-        p.add(getShow("The Sylvester & Tweety Mysteries", dailymotion));
-        p.add(getShow("Buzz lightyear of Star Command"));
-        p.add(getShow("Animanics", dailymotion));
-        p.add(getShow("Tom & Jerry", boomerang));
-        p.add(getShow("The Adventures of Teddy Ruxpin"));
-        p.add(getShow("Ducktails", DisneyYT));
-        p.add(getShow("AOK"));
-        p.add(getShow("underdog"));
-        p.add(getShow("Bikini Bottom Mysteries"));
-        p.add(getShow("Road Runner", boomerang));
-        p.add(getShow("Woody Woodpecker"));
-        p.add(getShow("Arthur"));
-        p.add(getShow("Spongebob"));
-        p.add(getShow("Om Nom Stories"));
+        p.add(getShow("New Looney Tunes", new LooneyTunes()));
+        p.add(getShow("Tom & Jerry", new TomAndJerry()));
+        //p.add(getShow("The Adventures of Teddy Ruxpin"));
+        p.add(getShow("AOK", new AOK()));
+        p.add(getShow("Bikini Bottom Mysteries", new BikiniBottomMysteries()));
+        //p.add(getShow("Road Runner", boomerang));
+        p.add(getShow("Woody Woodpecker", new WoodyWoodpecker()));
+        p.add(getShow("Arthur", new Arthur()));
+        p.add(getShow("Spongebob", new Spongebob()));
+        p.add(getShow("Om Nom Stories", new OmNom()));
+        p.add(getShow("Pink Panther", new PinkPanther()));
+        //p.add(getShow("Sylvester & Tweety"));
+        p.add(getShow("Studio C", new StudioC()));
+        p.add(getShow("Adam Ruins Everything", new AdamRuinsEverything()));
+        p.add(getShow("Infowars", new Infowars()));
+        p.add(getShow("Two Cents", new TwoCents()));
+        p.add(getShow("Oggy", new Oggy()));
+        p.add(getShow("Forensic Files", new ForensicFiles()));
+        p.add(getShow("Unsolved Mysteries", new UnsolvedMysteries()));
+        p.add(getShow("Heman", new Heman()));
+        p.add(getShow("Batman", new Batman()));
+        //p.add(getShow("Achmed Saves America"));
+        p.add(getShow("LGR Thrifts", new LGRThrifts()));
+        p.add(getShow("Techquickie", new Techquickie()));
+        p.add(getShow("Cheddar Explains", new CheddarExplains()));
+        //p.add(getShow("Toy Story"));
+        repaint();
         return p;
     }
 
-    public JLabel getShow(String showName) {
-        return getShow(showName, none);
-    }
-
-    public JLabel getShow(String showName, ImageType type) {
+    public JLabel getShow(String showName, Show s) {
         JLabel l = new JLabel();
-        l.setIcon(new ImageIcon(ImageIO.gwtDebug("videos/" + showName + "/logo.png").getScaledInstance(192, 112, 0)));
-        l.gwt.getElement().getStyle().setPaddingRight(24, Unit.PX);
-        //l.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        l.setIcon(new ImageIcon( new Image("videos/"  + showName + "/logo.png").getScaledInstance(192, 112, 0) ));
+        l.setBorder(BorderFactory.createEmptyBorder(5, 5, 8, 5));
         l.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                loading = true;
-                    JPanel p = new ShowPanel(path + "\\videos\\" + showName, type);
-                    setContentPane(new JScrollPane(p));
-                    validate();
+                JPanel p = new ShowPanel(path + "\\videos\\" + showName, s);
+                setContentPane(new JScrollPane(p));
+                validate();
             }
         });
+        l.setSize(192, 112);
+        l.setMaximumSize(new Dimension(200,130));
         return l;
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        g.drawString("Loading...", getWidth()/2, getHeight()/2);
-        super.paint(g);
-        g.drawString("Loading...", getWidth()/2, getHeight()/2);
     }
 
     public static void main(String[] args) {
