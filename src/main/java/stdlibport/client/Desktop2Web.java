@@ -5,7 +5,6 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import stdlibport.client.javax.swing.JFrame;
-import stdlibport.client.kekcroc.Kekcroc;
 import stdlibport.client.tv.fungus.IsaiahTv;
 
 /**

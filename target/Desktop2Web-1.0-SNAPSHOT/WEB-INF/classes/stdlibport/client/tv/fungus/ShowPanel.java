@@ -20,7 +20,7 @@ public class ShowPanel extends JPanel {
     public ShowPanel(String s, Show show) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        JButton b = new JButton("<");
+        JButton b = new JButton("<-- Back");
         b.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
