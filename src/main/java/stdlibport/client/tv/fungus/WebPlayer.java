@@ -19,7 +19,7 @@ public class WebPlayer extends JPanel {
         ((Frame)p.gwt).getElement().setAttribute("allowfullscreen", "");
         this.setSize(IsaiahTv.inst.getSize());
         Dimension d = IsaiahTv.inst.getSize();
-        JButton back = new JButton("<");
+        JButton back = new JButton("<--");
         back.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

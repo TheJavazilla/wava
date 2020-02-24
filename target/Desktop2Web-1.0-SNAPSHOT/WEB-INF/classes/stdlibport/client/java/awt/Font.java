@@ -33,16 +33,16 @@ public class Font {
     protected float pointSize;
     
     public Font(String name, int style, int size) {
-        this.name = (name != null) ? name : "Default";
-        this.style = (style & ~0x03) == 0 ? style : 0;
+        this.name = name;
+        this.style = style;
         this.size = size;
         this.pointSize = size;
     }
 
     private Font(String name, int style, float sizePts) {
-        this.name = (name != null) ? name : "Default";
-        this.style = (style & ~0x03) == 0 ? style : 0;
-        this.size = (int)(sizePts + 0.5);
+        this.name = name;
+        this.style = style;
+        this.size = (int) sizePts;
         this.pointSize = sizePts;
     }
 

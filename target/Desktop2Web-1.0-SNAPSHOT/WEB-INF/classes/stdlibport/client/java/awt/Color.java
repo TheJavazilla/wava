@@ -2,92 +2,36 @@ package stdlibport.client.java.awt;
 
 public class Color implements Paint {
     
-    /**
-     * The color white.  In the default sRGB space.
-     */
-    public final static Color white     = new Color(255, 255, 255);
 
-    /**
-     * The color white.  In the default sRGB space.
-     * @since 1.4
-     */
+    public final static Color white     = new Color(255, 255, 255);
     public final static Color WHITE = white;
 
-    /**
-     * The color light gray.  In the default sRGB space.
-     */
-    public final static Color lightGray = new Color(192, 192, 192);
 
-    /**
-     * The color light gray.  In the default sRGB space.
-     * @since 1.4
-     */
+    public final static Color lightGray = new Color(192, 192, 192);
     public final static Color LIGHT_GRAY = lightGray;
 
-    /**
-     * The color gray.  In the default sRGB space.
-     */
-    public final static Color gray      = new Color(128, 128, 128);
 
-    /**
-     * The color gray.  In the default sRGB space.
-     * @since 1.4
-     */
+    public final static Color gray      = new Color(128, 128, 128);
     public final static Color GRAY = gray;
 
-    /**
-     * The color dark gray.  In the default sRGB space.
-     */
-    public final static Color darkGray  = new Color(64, 64, 64);
 
-    /**
-     * The color dark gray.  In the default sRGB space.
-     * @since 1.4
-     */
+    public final static Color darkGray  = new Color(64, 64, 64);
     public final static Color DARK_GRAY = darkGray;
 
-    /**
-     * The color black.  In the default sRGB space.
-     */
-    public final static Color black     = new Color(0, 0, 0);
 
-    /**
-     * The color black.  In the default sRGB space.
-     * @since 1.4
-     */
+    public final static Color black     = new Color(0, 0, 0);
     public final static Color BLACK = black;
 
-    /**
-     * The color red.  In the default sRGB space.
-     */
-    public final static Color red       = new Color(255, 0, 0);
 
-    /**
-     * The color red.  In the default sRGB space.
-     * @since 1.4
-     */
+    public final static Color red       = new Color(255, 0, 0);
     public final static Color RED = red;
 
-    /**
-     * The color pink.  In the default sRGB space.
-     */
-    public final static Color pink      = new Color(255, 175, 175);
 
-    /**
-     * The color pink.  In the default sRGB space.
-     * @since 1.4
-     */
+    public final static Color pink      = new Color(255, 175, 175);
     public final static Color PINK = pink;
 
-    /**
-     * The color orange.  In the default sRGB space.
-     */
-    public final static Color orange    = new Color(255, 200, 0);
 
-    /**
-     * The color orange.  In the default sRGB space.
-     * @since 1.4
-     */
+    public final static Color orange    = new Color(255, 200, 0);
     public final static Color ORANGE = orange;
 
     /**
@@ -145,24 +89,23 @@ public class Color implements Paint {
      */
     public final static Color BLUE = blue;
 
+    @SuppressWarnings("unused")
+    private int r, g, b, a;
 
-    private int r, g, b;
     public Color(int r, int g, int b) {
+        this(r, g, b, 255);
+    }
+
+    public Color(int r, int g, int b, int a) {
         this.r = r;
         this.g = g;
         this.b = b;
-        // TODO Auto-generated constructor stub
-    }
-
-
-    public Color(int i, int j, int k, int l) {
-        this (i, j, k); // TODO: l
+        this.a = a;
     }
 
     @Override
     public int getTransparency() {
-        // TODO Auto-generated method stub
-        return 0;
+        return a;
     }
 
     public int getRed() {

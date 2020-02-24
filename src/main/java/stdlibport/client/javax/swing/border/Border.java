@@ -2,7 +2,7 @@ package stdlibport.client.javax.swing.border;
 
 import stdlibport.client.java.awt.Component;
 import stdlibport.client.java.awt.Graphics;
-import stdlibport.client.javax.awt.Insets;
+import stdlibport.client.java.awt.Insets;
 
 public interface Border {
 

@@ -21,6 +21,12 @@ public class Oggy extends Show {
                 "https://youtube.com/embed/AvaMgBmjDPk = S1 Ep12 - Jealousy",
                 "https://youtube.com/embed/YnNm25P4eoA = S1 Ep13 - Wrong Side of the Bed",
                 "https://youtube.com/embed/vja170e41C4 = S1 Ep14 - Go Slow with your Dough",
+                "https://youtube.com/embed/T2fxHAHXvNk = S1 Ep15 - TOOTH GOOD TO BE TRUE",
+                "https://youtube.com/embed/x404Ju0CgEY = S1 Ep16 - One Track Life",
+                "https://youtube.com/embed/IEvMK2LvZx8 = S1 Ep17 - Mouseagator",
+                "https://youtube.com/embed/QPOQr1h7Sbc = S1 Ep18 - Nine months and counting",
+                "https://youtube.com/embed/NtivqF_RVSY = S1 Ep19 - A tip for the road",
+                "https://youtube.com/embed/FKPx8mJry0E = S1 Ep20 - FKPx8mJry0E",
         };
 
     }

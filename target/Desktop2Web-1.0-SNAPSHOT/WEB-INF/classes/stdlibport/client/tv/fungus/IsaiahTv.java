@@ -54,11 +54,9 @@ public class IsaiahTv extends JFrame {
 
         JLabel name = (JLabel)p.add(new JLabel("FungusTV"));
         JLabel des = (JLabel)p.add(new JLabel("Free Streaming Made Possible"));
-        name.gwt.setPixelSize(100, 100);
-        //name.setFont(name.getFont().deriveFont(114f));
-        //des.setFont(des.getFont().deriveFont(32f));
-        name.setFontSize(114);
-        des.setFontSize(32);
+
+        name.setFont(name.getFont().deriveFont(114f));
+        des.setFont(des.getFont().deriveFont(32f));
 
         des.setVisible(false);
 
@@ -73,8 +71,8 @@ public class IsaiahTv extends JFrame {
         locFix.start();
 
         t = new Timer(10, a -> {
-            if (locFix.gwt.isRunning())
-                locFix.gwt.cancel();
+            if (locFix.isRunning())
+                locFix.stop();
 
             name.setLocation((getWidth()/2)-(250), (getHeight()/2)-(114+20));
 

@@ -7,18 +7,17 @@ public class TomAndJerry extends Show {
     @Override
     public String[] getEpisodes() {
         return new String[] {
+                "https://youtube.com/embed/htu8aFJBa10 = Tom and Jerry Tales - S1 Ep1 (Part 1) - Tiger Chase",
+                "https://youtube.com/embed/G7ez1IoyoAM = Tom and Jerry Tales - S1 Ep1 (Part 2) - Zoo Keeper",
+
                 "https://youtube.com/embed/et_F48Z8RDk = Tom and Jerry Tales - Tom Jerry And The Goddess Of Flame",
                 "https://youtube.com/embed/eMkyPJE34yk = Tom and Jerry Tales - Tom The Bell Boy",
                 "https://youtube.com/embed/w2td6ihRIyo = Tom and Jerry Tales - Tom The Space Octopus",
-                "https://youtube.com/embed/ReSsxW2QWaY = Tom and Jerry Show - Baby Octopus on the Loose - 3 minutes, 40 seconds",
                 "https://youtube.com/embed/a3dTQfpVf1I = Tom and Jerry Tales - Tom Wakes The Sleeping Snowmouse",
-                "https://youtube.com/embed/xnn0_NioUuA = Tom and Jerry Show - Tom, Jerry and The Balloons - 3 minutes, 16 seconds",
                 "https://youtube.com/embed/PBFh02DmT24 = Tom and Jerry Tales - Toms Robotic Replacement Nightmare",
-                "https://youtube.com/embed/TZCgYDCcS1Q = Tom and Jerry Show - Instructions Unclear, Created an Evil Snowman Instead - 3 minutes, 11 seconds",
                 "https://youtube.com/embed/u-Hce6sEfPg = Tom and Jerry Tales - Toms Rollercoaster Ride",
                 "https://youtube.com/embed/DsQdJKVUZeg = Tom and Jerry Tales - Too Skull For Cool",
                 "https://youtube.com/embed/Me8SGSlezmE = Tom and Jerry Tales - VR Mice Therapy",
-                "https://youtube.com/embed/C72RfavvbfY = Tom and Jerry Show - Spyke's Poker Face - 2 minutes, 57 seconds",
                 "https://youtube.com/embed/JES0-N8LmmU = Tom and Jerry Tales - Nephews & Sisters",
                 "https://youtube.com/embed/Rgb7M11afWI = Tom and Jerry Tales - Android Romance",
                 "https://youtube.com/embed/y2YX6hFmp3M = Tom and Jerry Tales - Battle of the Power Tools",

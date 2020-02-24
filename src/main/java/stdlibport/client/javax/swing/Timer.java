@@ -21,6 +21,14 @@ public class Timer {
 
     }
 
+    public boolean isRunning() {
+        return gwt.isRunning();
+    }
+
+    public void stop() {
+        gwt.cancel();
+    }
+
     public void setInitialDelay(int i) {
         // TODO Auto-generated method stub
     }
@@ -30,11 +38,10 @@ public class Timer {
     }
 
     public void start() {
-        if (repeats) {
+        if (repeats)
             gwt.scheduleRepeating(i);
-        } else {
+        else
             gwt.schedule(i);
-        }
     }
 
 }

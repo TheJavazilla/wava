@@ -36,4 +36,9 @@ public class JFrame extends JComponent {
         return this.contentPane;
     }
 
+    public void pack() {
+        // TODO
+        this.setSize(this.getContentPane().getSize());
+    }
+
 }

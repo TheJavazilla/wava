@@ -9,14 +9,6 @@ import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.MouseDownEvent;
-import com.google.gwt.event.dom.client.MouseDownHandler;
-import com.google.gwt.event.dom.client.MouseOutEvent;
-import com.google.gwt.event.dom.client.MouseOutHandler;
-import com.google.gwt.event.dom.client.MouseOverEvent;
-import com.google.gwt.event.dom.client.MouseOverHandler;
-import com.google.gwt.event.dom.client.MouseUpEvent;
-import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -25,7 +17,6 @@ import stdlibport.client.java.awt.Font;
 import stdlibport.client.java.awt.event.MouseListener;
 import stdlibport.client.java.awt.Point;
 import stdlibport.client.javax.swing.border.Border;
-import stdlibport.client.tv.fungus.ShowPanel;
 import stdlibport.client.java.awt.Color;
 import stdlibport.client.java.awt.Component;
 
@@ -126,56 +117,23 @@ public class JComponent extends Component {
     public void setForeground(Color c) {
         gwt.getElement().getStyle().setColor("rgb(" + c.getRed() + "," + c.getGreen() + "," + c.getBlue() + ")");
     }
-    
+
     public void setBackground(Color c) {
         gwt.getElement().getStyle().setBackgroundColor("rgb(" + c.getRed() + "," + c.getGreen() + "," + c.getBlue() + ")");
     }
 
     public void addMouseListener(MouseListener ml) {
-        class MyHandler implements ClickHandler, MouseDownHandler, MouseUpHandler, MouseOverHandler, MouseOutHandler {
-            @Override
-            public void onClick(ClickEvent event) {
-                ml.mouseClicked(MouseEvent.fromGWT(event));
-            }
-
-            @Override
-            public void onMouseOut(MouseOutEvent event) {
-                ml.mouseExited(MouseEvent.fromGWT(event));
-            }
-
-            @Override
-            public void onMouseOver(MouseOverEvent event) {
-                ml.mouseEntered(MouseEvent.fromGWT(event));
-            }
-
-            @Override
-            public void onMouseUp(MouseUpEvent event) {
-                ml.mouseReleased(MouseEvent.fromGWT(event));
-            }
-
-            @Override
-            public void onMouseDown(MouseDownEvent event) {
-                ml.mousePressed(MouseEvent.fromGWT(event));
-            }
-        }
-        //MyHandler mh = new MyHandler();
         ClickHandler mh = new ClickHandler() {
             public void onClick(ClickEvent event) {
                 ml.mouseClicked(MouseEvent.fromGWT(event));
               }
             };
-        //gwt.addHandler(mh, ClickEvent.getType());
+        // TODO better handlers
         if (gwt instanceof Button)
             ((Button)gwt).addClickHandler(mh);
         else gwt.addHandler(mh, ClickEvent.getType());
-
-        //gwt.addHandler(mh, ClickEvent.getType());
-        //gwt.addHandler(mh, MouseDownEvent.getType());
-        //gwt.addHandler(mh, MouseUpEvent.getType());
-        //gwt.addHandler(mh, MouseOverEvent.getType());
-        //gwt.addHandler(mh, MouseOutEvent.getType());
     }
-    
+
     public Font getFont() {
         return Font.fromGWT(gwt.getElement().getStyle());
     }
