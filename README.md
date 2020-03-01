@@ -14,4 +14,30 @@ This is not, atleast in the current state, a drop in replacement for these missi
 Right now it is not recommended to use this for non-testing purposes. This project is in very alpha stages. But if you do want to use this, it is a normal GWT module. All ported classes packages will start with `stdlibport.client`
 Ex: `java.awt.Color` would be `stdlibport.client.java.awt.Color`
 
-There is a demo located in [the index.html file](index.html)
+There is a provided maven plugin to use this with maven
+
+### Maven Plugin
+Repository:
+```
+<repository>
+    <id>fungus-software</id>
+    <url>https://raw.githubusercontent.com/IsaiahPatton/maven-repo/master/</url>
+</repository>
+```
+Plugin:
+```
+<plugin>
+    <groupId>com.fungus-soft</groupId>
+    <artifactId>java-2-gwt-plugin</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <executions>
+        <execution>
+            <phase>compile</phase>
+            <goals>
+                <goal>convert2GWT</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
