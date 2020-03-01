@@ -19,10 +19,10 @@ There is a provided maven plugin to use this with maven
 ### Maven Plugin
 Repository:
 ```
-<repository>
+<pluginRepository>
     <id>fungus-software</id>
-    <url>https://raw.githubusercontent.com/IsaiahPatton/maven-repo/master/</url>
-</repository>
+    <url>https://fungus-soft.com/maven-repo/</url>
+</pluginRepository>
 ```
 Plugin:
 ```

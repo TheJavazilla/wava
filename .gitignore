@@ -10,3 +10,6 @@
 /target/test-classes/
 /target/*.war
 /.settings/
+/demos/*/target/fungus-temp/
+/demos/*.*/target/fungus-temp/
+/demos/**/target/fungus-temp/
