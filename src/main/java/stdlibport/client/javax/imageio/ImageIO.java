@@ -19,7 +19,7 @@ public class ImageIO {
         return null;
     }
 
-    public static BufferedImage read(URL url) {
+    public static BufferedImage read(URL url) throws IOException {
         // TODO Auto-generated method stub
         return new BufferedImage(url);
     }

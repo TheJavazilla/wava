@@ -1,5 +1,7 @@
 package stdlibport.client.tv.fungus;
 
+import java.io.IOException;
+
 import stdlibport.client.java.awt.Color;
 import stdlibport.client.java.awt.Dimension;
 import stdlibport.client.java.awt.GridLayout;
@@ -77,7 +79,11 @@ public class IsaiahTv extends JFrame {
     }
 
     public Image image(String s, boolean cl) {
-        return ImageIO.read(new URL(s));
+        try {
+            return ImageIO.read(new URL(s));
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     public JPanel getMenu() {
@@ -119,7 +125,11 @@ public class IsaiahTv extends JFrame {
 
     public JLabel getShow(String showName, Show s) {
         JLabel l = new JLabel();
-        l.setIcon(new ImageIcon( ImageIO.read(new URL("videos/"  + showName + "/logo.png")).getScaledInstance(192, 112, 0) ));
+        try {
+            l.setIcon(new ImageIcon( ImageIO.read(new URL("videos/"  + showName + "/logo.png")).getScaledInstance(192, 112, 0) ));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
         l.setBorder(BorderFactory.createEmptyBorder(5, 5, 8, 5));
         l.addMouseListener(new MouseAdapter() {
             @Override
