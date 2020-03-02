@@ -5,9 +5,11 @@ tv\fungus\IsaiahTv$1.class
 tv\fungus\shows\Heman.class
 tv\fungus\shows\Infowars.class
 tv\fungus\shows\TomAndJerry.class
+tv\fungus\ShowPanel$2.class
 tv\fungus\shows\UnsolvedMysteries.class
 tv\fungus\IsaiahTv.class
 tv\fungus\shows\BikiniBottomMysteries.class
+tv\fungus\ShowPanel.class
 tv\fungus\shows\AdamRuinsEverything.class
 tv\fungus\shows\CheddarExplains.class
 tv\fungus\shows\TwoCents.class
@@ -20,6 +22,7 @@ tv\fungus\shows\Batman.class
 tv\fungus\shows\RoadRunner.class
 tv\fungus\shows\OmNom.class
 tv\fungus\shows\PinkPanther.class
+tv\fungus\ShowPanel$1.class
 tv\fungus\shows\ForensicFiles.class
 tv\fungus\Show.class
 tv\fungus\shows\Arthur.class
