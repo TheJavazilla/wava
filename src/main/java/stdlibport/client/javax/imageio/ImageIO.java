@@ -1,9 +1,9 @@
 package stdlibport.client.javax.imageio;
 
 import stdlibport.client.java.io.File;
+import stdlibport.client.java.io.IOException;
 import stdlibport.client.java.net.URL;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 import stdlibport.client.java.awt.Image;
