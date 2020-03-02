@@ -1,6 +1,9 @@
 package stdlibport.client.tv.fungus;
 
 import stdlibport.client.javax.swing.BoxLayout;
+
+import java.io.IOException;
+
 import stdlibport.client.java.awt.Insets;
 import stdlibport.client.java.awt.event.MouseAdapter;
 import stdlibport.client.java.awt.event.MouseEvent;
@@ -53,7 +56,11 @@ public class ShowPanel extends JPanel {
             l.setText(z + l.getText());
             l.setHorizontalAlignment(SwingConstants.LEFT);
             l.setMargin(new Insets(4, 4, 4, 4));
-            l.setIcon(new ImageIcon(ImageIO.read(new URL("https://i3.ytimg.com/vi/" + vid + "/default.jpg"))));
+            try {
+                l.setIcon(new ImageIcon(ImageIO.read(new URL("https://i3.ytimg.com/vi/" + vid + "/default.jpg"))));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
             this.add(l);
         }
