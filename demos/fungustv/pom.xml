@@ -17,6 +17,24 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <jframeClass>tv.fungus.IsaiahTv</jframeClass>
   </properties>
+  
+  <repositories>
+	<repository>
+		<id>jitpack.io</id>
+		<url>https://jitpack.io</url>
+	</repository>
+  </repositories>
+
+  <dependencies>
+      <dependency>
+        <groupId>com.github.codebrig</groupId>
+        <artifactId>journey</artifactId>
+        <version>0.4.0-online</version>
+
+        <!-- or use the offline version (includes native CEF files for all platforms; ~300MB) -->
+        <!-- <version>0.4.0-offline</version> -->
+      </dependency>
+  </dependencies>
 
   <build>
     <plugins>

@@ -15,27 +15,7 @@ import stdlibport.client.javax.swing.JLabel;
 import stdlibport.client.javax.swing.JPanel;
 import stdlibport.client.javax.swing.JScrollPane;
 import stdlibport.client.javax.swing.Timer;
-import stdlibport.client.tv.fungus.shows.AOK;
-import stdlibport.client.tv.fungus.shows.AdamRuinsEverything;
-import stdlibport.client.tv.fungus.shows.Arthur;
-import stdlibport.client.tv.fungus.shows.Batman;
-import stdlibport.client.tv.fungus.shows.BikiniBottomMysteries;
-import stdlibport.client.tv.fungus.shows.CheddarExplains;
-import stdlibport.client.tv.fungus.shows.ForensicFiles;
-import stdlibport.client.tv.fungus.shows.Heman;
-import stdlibport.client.tv.fungus.shows.Infowars;
-import stdlibport.client.tv.fungus.shows.LGRThrifts;
-import stdlibport.client.tv.fungus.shows.LooneyTunes;
-import stdlibport.client.tv.fungus.shows.Oggy;
-import stdlibport.client.tv.fungus.shows.OmNom;
-import stdlibport.client.tv.fungus.shows.PinkPanther;
-import stdlibport.client.tv.fungus.shows.Spongebob;
-import stdlibport.client.tv.fungus.shows.StudioC;
-import stdlibport.client.tv.fungus.shows.Techquickie;
-import stdlibport.client.tv.fungus.shows.TomAndJerry;
-import stdlibport.client.tv.fungus.shows.TwoCents;
-import stdlibport.client.tv.fungus.shows.UnsolvedMysteries;
-import stdlibport.client.tv.fungus.shows.WoodyWoodpecker;
+import stdlibport.client.tv.fungus.shows.*;
 
 public class IsaiahTv extends JFrame {
 

@@ -27,6 +27,10 @@ public class JFrame extends JComponent {
     }
 
     public void setContentPane(JComponent p) {
+        if (p instanceof JScrollPane) {
+            // Fix scroll pane size
+            ((JScrollPane)p).fixSize(this.getSize());
+        }
         this.contentPane = p;
         ((DialogBox)gwt).setWidget(p.gwt);
         

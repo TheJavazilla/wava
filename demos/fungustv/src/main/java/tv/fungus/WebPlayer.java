@@ -1,7 +1,6 @@
 package tv.fungus;
 
-import com.google.gwt.user.client.ui.Frame;
-
+import com.codebrig.journey.JourneyBrowserView;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,11 +11,8 @@ import javax.swing.JScrollPane;
 public class WebPlayer extends JPanel {
 
     public WebPlayer(String url) {
-        JPanel p = new JPanel();
+        JourneyBrowserView browser = new JourneyBrowserView(url);
 
-        p.gwt = new Frame();
-        ((Frame)p.gwt).setUrl(url);
-        ((Frame)p.gwt).getElement().setAttribute("allowfullscreen", "");
         this.setSize(IsaiahTv.inst.getSize());
         Dimension d = IsaiahTv.inst.getSize();
         JButton back = new JButton("<--");
@@ -29,8 +25,8 @@ public class WebPlayer extends JPanel {
             }
         });
         add(back);
-        p.setSize(d.width - 1, d.height - back.getSize().height - 36);
-        add(p);
+        browser.setSize(d.width - 1, d.height - back.getSize().height - 36);
+        add(browser);
     }
 
 }

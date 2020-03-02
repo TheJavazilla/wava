@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URL;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -13,27 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
-import tv.fungus.shows.AOK;
-import tv.fungus.shows.AdamRuinsEverything;
-import tv.fungus.shows.Arthur;
-import tv.fungus.shows.Batman;
-import tv.fungus.shows.BikiniBottomMysteries;
-import tv.fungus.shows.CheddarExplains;
-import tv.fungus.shows.ForensicFiles;
-import tv.fungus.shows.Heman;
-import tv.fungus.shows.Infowars;
-import tv.fungus.shows.LGRThrifts;
-import tv.fungus.shows.LooneyTunes;
-import tv.fungus.shows.Oggy;
-import tv.fungus.shows.OmNom;
-import tv.fungus.shows.PinkPanther;
-import tv.fungus.shows.Spongebob;
-import tv.fungus.shows.StudioC;
-import tv.fungus.shows.Techquickie;
-import tv.fungus.shows.TomAndJerry;
-import tv.fungus.shows.TwoCents;
-import tv.fungus.shows.UnsolvedMysteries;
-import tv.fungus.shows.WoodyWoodpecker;
+import tv.fungus.shows.*;
 
 public class IsaiahTv extends JFrame {
 
@@ -95,7 +77,7 @@ public class IsaiahTv extends JFrame {
     }
 
     public Image image(String s, boolean cl) {
-        return new Image(s);
+        return ImageIO.read(new URL(s));
     }
 
     public JPanel getMenu() {
@@ -137,7 +119,7 @@ public class IsaiahTv extends JFrame {
 
     public JLabel getShow(String showName, Show s) {
         JLabel l = new JLabel();
-        l.setIcon(new ImageIcon( new Image("videos/"  + showName + "/logo.png").getScaledInstance(192, 112, 0) ));
+        l.setIcon(new ImageIcon( ImageIO.read(new URL("videos/"  + showName + "/logo.png")).getScaledInstance(192, 112, 0) ));
         l.setBorder(BorderFactory.createEmptyBorder(5, 5, 8, 5));
         l.addMouseListener(new MouseAdapter() {
             @Override

@@ -1,11 +1,11 @@
-package stdlibport.client.java.awt;
+package stdlibport.client.javax.swing;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+import stdlibport.client.java.awt.LayoutManager;
 import stdlibport.client.javax.swing.JComponent;
-
 
 public class BoxLayout implements LayoutManager {
 
