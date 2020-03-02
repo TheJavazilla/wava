@@ -16,7 +16,8 @@ public class WebPlayer extends JPanel {
 
         p.gwt = new Frame();
         ((Frame)p.gwt).setUrl(url);
-        ((Frame)p.gwt).getElement().setAttribute("allowfullscreen", "");
+        //((Frame)p.gwt).getElement().setAttribute("allowfullscreen", "");
+
         this.setSize(IsaiahTv.inst.getSize());
         Dimension d = IsaiahTv.inst.getSize();
         JButton back = new JButton("<--");

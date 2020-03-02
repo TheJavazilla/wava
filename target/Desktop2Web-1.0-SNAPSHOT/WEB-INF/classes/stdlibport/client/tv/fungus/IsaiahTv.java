@@ -6,6 +6,8 @@ import stdlibport.client.java.awt.GridLayout;
 import stdlibport.client.java.awt.Image;
 import stdlibport.client.java.awt.event.MouseAdapter;
 import stdlibport.client.java.awt.event.MouseEvent;
+import stdlibport.client.java.net.URL;
+import stdlibport.client.javax.imageio.ImageIO;
 import stdlibport.client.javax.swing.BorderFactory;
 import stdlibport.client.javax.swing.ImageIcon;
 import stdlibport.client.javax.swing.JFrame;
@@ -95,7 +97,7 @@ public class IsaiahTv extends JFrame {
     }
 
     public Image image(String s, boolean cl) {
-        return new Image(s);
+        return ImageIO.read(new URL(s));
     }
 
     public JPanel getMenu() {
@@ -137,7 +139,7 @@ public class IsaiahTv extends JFrame {
 
     public JLabel getShow(String showName, Show s) {
         JLabel l = new JLabel();
-        l.setIcon(new ImageIcon( new Image("videos/"  + showName + "/logo.png").getScaledInstance(192, 112, 0) ));
+        l.setIcon(new ImageIcon( ImageIO.read(new URL("videos/"  + showName + "/logo.png")).getScaledInstance(192, 112, 0) ));
         l.setBorder(BorderFactory.createEmptyBorder(5, 5, 8, 5));
         l.addMouseListener(new MouseAdapter() {
             @Override

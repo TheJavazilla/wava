@@ -1,15 +1,7 @@
 /** Add css rules here for your application. */
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
-}
+.gwt-DialogBox {width:500px; height:450px;}
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 500px;
-  height: 450px;
-}
 /* Below is because GWT DialogBox is broken */
 
 .dialogTopCenter {
@@ -28,9 +20,7 @@
   border-bottom: 0;
 }
 
-.dialogTopLeft {
-    border-top-left-radius: 8px;
-}
+.dialogTopLeft {border-top-left-radius:8px;}
 
 .dialogMiddleLeft, .dialogMiddleLeftInner, .dialogMiddleRight, .dialogMiddleRightInner {
   padding: 0 !important;

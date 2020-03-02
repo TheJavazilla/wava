@@ -3,11 +3,12 @@ package stdlibport.client.java.awt;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 
+import stdlibport.client.java.net.URL;
 import stdlibport.client.javax.swing.JComponent;
 
 public class Image extends JComponent {
 
-    public Image(String name) {
+    public Image(URL name) {
         com.google.gwt.user.client.ui.Image img = new com.google.gwt.user.client.ui.Image();
         this.gwt = img;
         img.setUrl(name);
@@ -19,7 +20,7 @@ public class Image extends JComponent {
         });
     }
 
-    public Image(com.google.gwt.user.client.ui.Image img) {
+    private Image(com.google.gwt.user.client.ui.Image img) {
         this.gwt = img;
         img.addErrorHandler(new ErrorHandler() {
             @Override

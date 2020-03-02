@@ -19,13 +19,9 @@ public class ImageIO {
         return null;
     }
 
-    public static BufferedImage gwtDebug(String name) {
-        return new BufferedImage(name);
-    }
-
     public static BufferedImage read(URL url) {
         // TODO Auto-generated method stub
-        return new BufferedImage(url.toString());
+        return new BufferedImage(url);
     }
 
     public static void write(BufferedImage bi, String string, File fi) {
