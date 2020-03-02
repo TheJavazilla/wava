@@ -1,0 +1,31 @@
+/** Add css rules here for your application. */
+
+.gwt-DialogBox {width:500px; height:450px;}
+
+/* Below is because GWT DialogBox is broken */
+
+.dialogTopCenter {
+  padding: 0 !important;
+  padding-top: 0 !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  width: 100%;
+}
+
+.dialogTopLeft, .dialogBottomLeft {
+  height:1px !important;;
+  background: rgb(242,242,242) !important;
+  border: 1px solid rgb(210,210,210);
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.dialogTopLeft {border-top-left-radius:8px;}
+
+.dialogMiddleLeft, .dialogMiddleLeftInner, .dialogMiddleRight, .dialogMiddleRightInner {
+  padding: 0 !important;
+  padding-top: 0 !important;
+  margin: 0 !important;
+  margin-top: 0 !important;
+  width: 12px;
+}
