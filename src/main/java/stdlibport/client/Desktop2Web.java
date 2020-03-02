@@ -5,7 +5,7 @@ import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import stdlibport.client.javax.swing.JFrame;
-import stdlibport.client.tv.fungus.IsaiahTv;
+import stdlibport.client.IsaiahTv;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
