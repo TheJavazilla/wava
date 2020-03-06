@@ -6,13 +6,33 @@ import stdlibport.client.java.io.File;
 
 public class Desktop {
 
+    private static Desktop desktop;
+
+    public static enum Action {
+        OPEN,
+        EDIT,
+        PRINT,
+        MAIL,
+        BROWSE
+    };
+
     public static Desktop getDesktop() {
-        // TODO Auto-generated method stub
-        return null;
+        if (desktop == null)
+            desktop = new Desktop();
+        return desktop;
     }
 
     public void open(File f) throws IOException {
         // TODO Auto-generated method stub
+    }
+
+    public static boolean isDesktopSupported() {
+        return false;
+    }
+
+    public boolean isSupported(Action action) {
+        // TODO
+        return false;
     }
 
 }

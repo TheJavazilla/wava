@@ -1,20 +1,18 @@
 package stdlibport.client.javax.swing;
 
-import stdlibport.client.java.awt.Font;
-import stdlibport.client.java.awt.event.MouseEvent;
-import stdlibport.client.java.awt.event.MouseListener;
-import stdlibport.client.javax.swing.ImageIcon;
-
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.FontStyle;
 import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+
+import stdlibport.client.java.awt.Font;
+import stdlibport.client.java.awt.event.MouseEvent;
+import stdlibport.client.java.awt.event.MouseListener;
 
 public class JLabel extends JComponent {
     

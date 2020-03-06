@@ -14,7 +14,6 @@
 /demos/*.*/target/classes/
 /demos/**/target/classes/
 
-/demos/*/target/*/WEB-INF/
-/demos/*.*/target/*.*/WEB-INF/
 /demos/**/target/**/WEB-INF/
+/demos/**/target/**/original-*.jar
 bin/

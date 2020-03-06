@@ -7,31 +7,31 @@ public class Font {
     /*
      * Constants to be used for logical font family names.
      */
-    public static final String DIALOG = "Dialog";
+    public static final String DIALOG       = "Dialog";
     public static final String DIALOG_INPUT = "DialogInput";
-    public static final String SANS_SERIF = "SansSerif";
-    public static final String SERIF = "Serif";
-    public static final String MONOSPACED = "Monospaced";
+    public static final String SANS_SERIF   = "SansSerif";
+    public static final String SERIF        = "Serif";
+    public static final String MONOSPACED   = "Monospaced";
 
     /*
      * Constants to be used for styles. Can be combined to mix styles.
      */
-    public static final int PLAIN       = 0;
-    public static final int BOLD        = 1;
-    public static final int ITALIC      = 2;
+    public static final int PLAIN   = 0;
+    public static final int BOLD    = 1;
+    public static final int ITALIC  = 2;
 
-    public static final int ROMAN_BASELINE = 0;
-    public static final int CENTER_BASELINE = 1;
+    public static final int ROMAN_BASELINE   = 0;
+    public static final int CENTER_BASELINE  = 1;
     public static final int HANGING_BASELINE = 2;
 
     public static final int TRUETYPE_FONT = 0;
-    public static final int TYPE1_FONT = 1;
+    public static final int TYPE1_FONT    = 1;
 
     protected String name;
     protected int style;
     protected int size;
     protected float pointSize;
-    
+
     public Font(String name, int style, int size) {
         this.name = name;
         this.style = style;
@@ -54,8 +54,7 @@ public class Font {
     }
 
     public Font deriveFont(float f) {
-        Font font = new Font(name, style, f);
-        return font;
+        return new Font(name, style, f);
     }
 
     public static Font fromGWT(Style gwt) {

@@ -21,10 +21,10 @@ public interface SwingConstants {
     public static final int HORIZONTAL = 0;
     public static final int VERTICAL   = 1;
 
-    public static final int LEADING  = 10;
-    public static final int TRAILING = 11;
+    public static final int LEADING    = 10;
+    public static final int TRAILING   = 11;
 
-    public static final int NEXT = 12;
-    public static final int PREVIOUS = 13;
+    public static final int NEXT       = 12;
+    public static final int PREVIOUS   = 13;
 
 }

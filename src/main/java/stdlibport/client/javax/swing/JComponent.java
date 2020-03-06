@@ -81,7 +81,6 @@ public class JComponent extends Component {
     }
 
     public Point getLocation() {
-        // TODO
         String t = gwt.getElement().getStyle().getTop().replace("px", "");
         String l = gwt.getElement().getStyle().getLeft().replace("px", "");
         if (t.length() > 0 && l.length() > 0)
@@ -119,6 +118,7 @@ public class JComponent extends Component {
     }
 
     public void setBackground(Color c) {
+        gwt.getElement().getStyle().setProperty("background", "rgb(" + c.getRed() + "," + c.getGreen() + "," + c.getBlue() + ")");
         gwt.getElement().getStyle().setBackgroundColor("rgb(" + c.getRed() + "," + c.getGreen() + "," + c.getBlue() + ")");
     }
 

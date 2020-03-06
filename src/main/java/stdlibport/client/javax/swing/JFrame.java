@@ -3,7 +3,7 @@ package stdlibport.client.javax.swing;
 import com.google.gwt.user.client.ui.DialogBox;
 
 public class JFrame extends JComponent {
-    
+
     private JComponent contentPane;
 
     public JFrame() {
@@ -13,8 +13,6 @@ public class JFrame extends JComponent {
     public JFrame(String string) {
         super();
         gwt = new DialogBox();
-        //((DialogBox)gwt).setAnimationEnabled(true);
-        //gwt = new FlowPanel();
         setTitle(string);
     }
 

@@ -33,13 +33,8 @@ public class Image extends JComponent {
     public Image getScaledInstance(int w, int h, int z) {
         com.google.gwt.user.client.ui.Image image = (com.google.gwt.user.client.ui.Image)gwt;
 
-        int originalHeight = image.getOffsetHeight();
-        int originalWidth = image.getOffsetWidth();
-        //if (originalHeight > originalWidth) {
-            image.setHeight(h + "px");
-        //} else {
-            image.setWidth(w + "px");
-        //}
+        image.setHeight(h + "px");
+        image.setWidth(w + "px");
 
         return new Image(image);
     }

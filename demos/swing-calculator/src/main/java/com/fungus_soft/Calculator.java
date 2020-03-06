@@ -16,7 +16,7 @@ public class Calculator extends JFrame {
         Calculator frame = new Calculator();
         frame.setDefaultCloseOperation(3);
         frame.pack();
-        frame.setSize(frame.getWidth() + 42, frame.getHeight() + 73);
+        frame.setSize(frame.getWidth() - 12, frame.getHeight() + 73);
         frame.setVisible(true);
     }
 
@@ -29,8 +29,6 @@ public class Calculator extends JFrame {
 
     public Calculator() {
         JPanel p = new JPanel();
-        //p.setLayout(new BorderLayout());
-
         p.add(display);
 
         JPanel panel = new JPanel();
@@ -43,27 +41,24 @@ public class Calculator extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 operator = "C";
-                calculate(Double.parseDouble(display.getText()));
+                calculate(0);
             }
         });
 
-        JButton off = ((JButton)simple.add(new JButton("X")));
-        off.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                operator = "X";
-                calculate(Double.parseDouble(display.getText()));
-            }
-        });
-        off.setBackground(Color.RED);
         for (int i = 0; i < buttonLabels.length(); i++) {
             int i_final = i;
-            ((JButton)simple.add(new JButton(buttonLabels.substring(i, i + 1)))).addMouseListener(new MouseAdapter() {
+            JButton btn = ((JButton)simple.add(new JButton(buttonLabels.substring(i, i + 1))));
+            char ch = btn.getText().charAt(0);
+            if ('0' <= ch && ch <= '9' || ch == '.') {
+                btn.setBackground(Color.WHITE);
+            } else btn.setBackground(Color.LIGHT_GRAY);
+
+            btn.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     actionPerformed(buttonLabels.substring(i_final, i_final + 1));
                 }
-            });//.addActionListener(this);
+            });
         }
 
         panel.add(simple);
@@ -109,14 +104,12 @@ public class Calculator extends JFrame {
             case "=":
                 result = n;
                 break;
-            case "\u221A":
-                result = Math.sqrt(n);
-                break;
             case "C":
-                result = 0;
+                this.calculating = true;
+                result = n;
                 break;
         }
-        display.setText("" + result);
+        display.setText("" + (String.valueOf(result).endsWith(".0") ? (int)result : result));
     }
 
  }
