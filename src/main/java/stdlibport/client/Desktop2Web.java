@@ -4,7 +4,7 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.RootPanel;
 
-import stdlibport.client.javax.swing.JFrame;
+import javax.swing.JFrame;
 import stdlibport.client.IsaiahTv;
 
 /**

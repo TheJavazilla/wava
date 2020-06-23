@@ -1,8 +1,8 @@
 package stdlibport.client;
 
-import stdlibport.client.javax.swing.JFrame;
-import stdlibport.client.javax.swing.JLabel;
-import stdlibport.client.javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class IsaiahTv extends JFrame {
 

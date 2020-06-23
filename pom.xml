@@ -70,10 +70,11 @@
         <groupId>net.ltgt.gwt.maven</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
         <version>1.0.0</version>
+        <extensions>true</extensions>
         <executions>
           <execution>
             <goals>
-              <goal>import-sources</goal>
+              <goal>add-super-sources</goal>
               <goal>compile</goal>
               <!--<goal>import-test-sources</goal>
               <goal>test</goal>-->
@@ -93,7 +94,7 @@
           </compilerArgs>
           <!-- DevMode configuration -->
           <warDir>${project.build.directory}/${project.build.finalName}</warDir>
-          <classpathScope>compile+runtime</classpathScope>
+          <!--<classpathScope>compile+runtime</classpathScope>-->
           <!-- URL(s) that should be opened by DevMode (gwt:devmode). -->
           <startupUrls>
             <startupUrl>Desktop2Web.html</startupUrl>
