@@ -13,7 +13,7 @@ There is a provided maven plugin to use this with maven
 
 ## Maven Plugin
 We provide a Maven plugin that you can add to your existing Java project.
-Usage of this maven plugin is governed by the [Fungus Product Licence v1.0][https://fungus-soft.com/wava/PLUGIN-LICENCE.txt]
+Usage of this maven plugin is governed by the [Fungus Product Licence v1.0][PLUGIN-LICENCE.txt]
 
 Repository:
 ```
