@@ -1,20 +1,10 @@
-/bin/
 /target/
+/bin/
 /.settings/
 /demos/*/target/fungus-temp/
-/demos/*.*/target/fungus-temp/
-/demos/**/target/fungus-temp/
 /demos/*/target/maven-archiver/
-/demos/*.*/target/maven-archiver/
-/demos/**/target/maven-archiver/
 /demos/*/target/maven-status/
-/demos/*.*/target/maven-status/
-/demos/**/target/maven-status/
 /demos/*/target/classes/
-/demos/*.*/target/classes/
-/demos/**/target/classes/
 
-/demos/**/target/**/WEB-INF/
 /demos/**/target/**/original-*.jar
-bin/
 /war/
