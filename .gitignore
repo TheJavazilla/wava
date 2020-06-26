@@ -17,3 +17,4 @@
 /demos/**/target/**/WEB-INF/
 /demos/**/target/**/original-*.jar
 bin/
+/war/
