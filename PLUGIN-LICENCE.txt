@@ -1,0 +1,18 @@
+Fungus Software Product Licence
+
+Copyright (C) 2020 Fungus Software <https://fungus-soft.com/>
+
+By downloading, using, and/or modifying this piece of software you agree to the following terms and conditions:
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Permission is hereby granted for non-commercial use to any person obtaining a copy of this software and associated documentation files (the "Software")
+to use, modifiy, merge, and/or redistribute, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+- The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+- The software must not be used for any commercial purpose, see the commercial use section below.
+
+Permission of commercial use is hereby granted to any paying customer who has purchased a valid product key for this piece of software from Fungus Software or an authorized affiliate.
+This will provide one year of the rights to use, modifiy, merge, and/or redistribute.
