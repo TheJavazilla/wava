@@ -23,7 +23,7 @@
       <plugin>
         <groupId>com.fungus-soft</groupId>
         <artifactId>java-2-gwt-plugin</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
         <executions>
           <execution>
             <phase>compile</phase>
@@ -71,7 +71,7 @@
     									java-2-gwt-plugin
     								</artifactId>
     								<versionRange>
-    									[0.0.1-SNAPSHOT,)
+    									[0.0.2-SNAPSHOT,)
     								</versionRange>
     								<goals>
     									<goal>convert2GWT</goal>
