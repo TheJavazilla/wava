@@ -1,9 +1,9 @@
 package java.awt;
 
-//import java.awt.geom.Dimension2D;
+import java.awt.geom.Dimension2D;
 import java.beans.Transient;
 
-public class Dimension /*extends Dimension2D*/ implements java.io.Serializable {
+public class Dimension extends Dimension2D implements java.io.Serializable {
 
     private static final long serialVersionUID = 1L;
 

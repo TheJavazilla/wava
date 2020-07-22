@@ -1,5 +1,9 @@
 package java.awt;
 
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.ColorModel;
+
 public class Color implements Paint {
     
 
@@ -54,6 +58,7 @@ public class Color implements Paint {
     public final static Color blue = new Color(0, 0, 255);
     public final static Color BLUE = blue;
 
+    public int value;
     private int r, g, b, a;
 
     public Color(int r, int g, int b) {
@@ -65,6 +70,19 @@ public class Color implements Paint {
         this.g = g;
         this.b = b;
         this.a = a;
+    }
+
+    public Color(int bgArgb, boolean bgHasAlpha) {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Color(int rgb) {
+        // TODO Auto-generated constructor stub
+    }
+
+    public Color(float r, float g, float b) {
+        this((int)r, (int)g, (int)b);
+        // TODO Auto-generated constructor stub
     }
 
     @Override
@@ -82,6 +100,52 @@ public class Color implements Paint {
     
     public int getBlue() {
         return b;
+    }
+
+    public int getAlpha() {
+        return a;
+    }
+
+    public int getRGB() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public PaintContext createContext(ColorModel deviceColorModel, Rectangle devR, Rectangle2D bounds2d,
+            AffineTransform cloneTransform, RenderingHints renderingHints) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Color brighter() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public Color darker() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public static Color decode(String string) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public static float[] RGBtoHSB(int red2, int green2, int blue2, Object object) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public static int HSBtoRGB(float f, float h, float i) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    public static Color getHSBColor(float hOffset, float sOffset, float bOffset) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

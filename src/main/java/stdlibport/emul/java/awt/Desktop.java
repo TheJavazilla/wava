@@ -3,6 +3,7 @@ package java.awt;
 import java.io.IOException;
 
 import java.io.File;
+import java.net.URI;
 
 public class Desktop {
 
@@ -33,6 +34,14 @@ public class Desktop {
     public boolean isSupported(Action action) {
         // TODO
         return false;
+    }
+
+    public void browse(URI uri) throws IOException {
+        // TODO
+    }
+
+    public void mail() throws IOException {
+        // TODO
     }
 
 }

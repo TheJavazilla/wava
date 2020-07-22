@@ -1,9 +1,15 @@
 package java.awt;
 
-import com.google.gwt.user.client.ui.Widget;
-
 public interface LayoutManager {
 
-    public Widget gwt();
+    void addLayoutComponent(String name, Component comp);
+
+    void removeLayoutComponent(Component comp);
+
+    Dimension preferredLayoutSize(Container parent);
+
+    Dimension minimumLayoutSize(Container parent);
+
+    void layoutContainer(Container parent);
 
 }
