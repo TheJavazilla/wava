@@ -1,28 +1,3 @@
-/*
- * Copyright (c) 1998, 2013, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- * questions.
- */
-
 package javax.swing.table;
 
 import javax.swing.*;
@@ -82,9 +57,7 @@ import wava.sun.swing.DefaultLookup;
  * @author Philip Milne
  * @see JTable
  */
-public class DefaultTableCellRenderer extends JLabel
-    implements TableCellRenderer, Serializable
-{
+public class DefaultTableCellRenderer extends JLabel implements TableCellRenderer, Serializable {
 
    /**
     * An empty <code>Border</code>. This field might not be used. To change the
@@ -115,14 +88,10 @@ public class DefaultTableCellRenderer extends JLabel
 
     private Border getNoFocusBorder() {
         Border border = DefaultLookup.getBorder(this, ui, "Table.cellNoFocusBorder");
-        if (System.getSecurityManager() != null) {
-            if (border != null) return border;
-            return SAFE_NO_FOCUS_BORDER;
-        } else if (border != null) {
-            if (noFocusBorder == null || noFocusBorder == DEFAULT_NO_FOCUS_BORDER) {
+        if (border != null)
+            if (noFocusBorder == null || noFocusBorder == DEFAULT_NO_FOCUS_BORDER)
                 return border;
-            }
-        }
+
         return noFocusBorder;
     }
 

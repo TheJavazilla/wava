@@ -1,28 +1,3 @@
-/*
- * Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- * questions.
- */
-
 package wava.sun.awt.dnd;
 
 import java.awt.Component;
@@ -58,16 +33,6 @@ import wava.sun.awt.SunToolkit;
 import wava.sun.awt.datatransfer.DataTransferer;
 import wava.sun.awt.datatransfer.ToolkitThreadBlockedHandler;
 // TODO WAVA import wava.sun.security.util.SecurityConstants;
-
-/**
- * <p>
- * The SunDropTargetContextPeer class is the generic class responsible for handling
- * the interaction between a windowing systems DnD system and Java.
- * </p>
- *
- * @since JDK1.3.1
- *
- */
 
 public abstract class SunDropTargetContextPeer implements DropTargetContextPeer, Transferable {
 
@@ -217,13 +182,8 @@ public abstract class SunDropTargetContextPeer implements DropTargetContextPeer,
     /**
      * @return the data
      */
+    public Object getTransferData(DataFlavor df) throws UnsupportedFlavorException, IOException, InvalidDnDOperationException {
 
-    public Object getTransferData(DataFlavor df)
-      throws UnsupportedFlavorException, IOException,
-        InvalidDnDOperationException
-    {
-
-        SecurityManager sm = System.getSecurityManager();
         try {
             //if (!dropInProcess && sm != null) {
             //    sm.checkPermission(SecurityConstants.AWT.ACCESS_CLIPBOARD_PERMISSION);

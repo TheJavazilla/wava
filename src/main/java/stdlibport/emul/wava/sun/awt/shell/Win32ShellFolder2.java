@@ -564,10 +564,6 @@ final class Win32ShellFolder2 extends ShellFolder {
             }
         }, IOException.class);
         if (path != null) {
-            SecurityManager security = System.getSecurityManager();
-            if (security != null) {
-                security.checkRead(path);
-            }
         }
         return path;
     }
@@ -646,11 +642,6 @@ final class Win32ShellFolder2 extends ShellFolder {
      *         <code>null</code> if this shellfolder does not denote a directory.
      */
     public File[] listFiles(final boolean includeHiddenFiles) {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-            security.checkRead(getPath());
-        }
-
         try {
                 File[] files = invoke(new Callable<File[]>() {
                 public File[] call() throws InterruptedException {

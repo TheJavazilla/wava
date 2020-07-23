@@ -7,10 +7,8 @@ package java.awt;
  * <code>MouseInfo</code>  provides methods for getting information about the mouse,
  * such as mouse pointer location and the number of mouse buttons.
  *
- * @author     Roman Poborchiy
- * @since 1.5
+ * @author Roman Poborchiy
  */
-
 public class MouseInfo {
 
     /**
@@ -47,14 +45,10 @@ public class MouseInfo {
      * @since     1.5
      */
     public static PointerInfo getPointerInfo() throws HeadlessException {
-        if (GraphicsEnvironment.isHeadless()) {
+        if (GraphicsEnvironment.isHeadless())
             throw new HeadlessException();
-        }
 
-        SecurityManager security = System.getSecurityManager();
-        // TODO WAVA if (security != null) {
         // TODO WAVA    security.checkPermission(SecurityConstants.AWT.WATCH_MOUSE_PERMISSION);
-        // TODO WAVA }
 
         Point point = new Point(0, 0);
         int deviceNum = Toolkit.getDefaultToolkit().getMouseInfoPeer().fillPointWithCoords(point);
@@ -67,9 +61,8 @@ public class MouseInfo {
             for (int i = 0; i < gds.length; i++) {
                 GraphicsConfiguration gc = gds[i].getDefaultConfiguration();
                 Rectangle bounds = gc.getBounds();
-                if (bounds.contains(point)) {
+                if (bounds.contains(point))
                     retval = new PointerInfo(gds[i], point);
-                }
             }
         }
 
@@ -79,9 +72,8 @@ public class MouseInfo {
     private static boolean areScreenDevicesIndependent(GraphicsDevice[] gds) {
         for (int i = 0; i < gds.length; i++) {
             Rectangle bounds = gds[i].getDefaultConfiguration().getBounds();
-            if (bounds.x != 0 || bounds.y != 0) {
+            if (bounds.x != 0 || bounds.y != 0)
                 return false;
-            }
         }
         return true;
     }
@@ -95,14 +87,12 @@ public class MouseInfo {
      * @since 1.5
      */
     public static int getNumberOfButtons() throws HeadlessException {
-        if (GraphicsEnvironment.isHeadless()) {
+        if (GraphicsEnvironment.isHeadless())
             throw new HeadlessException();
-        }
-        Object prop = Toolkit.getDefaultToolkit().
-                              getDesktopProperty("awt.mouse.numButtons");
-        if (prop instanceof Integer) {
+
+        Object prop = Toolkit.getDefaultToolkit().getDesktopProperty("awt.mouse.numButtons");
+        if (prop instanceof Integer)
             return ((Integer)prop).intValue();
-        }
 
         // This should never happen.
         assert false : "awt.mouse.numButtons is not an integer property";

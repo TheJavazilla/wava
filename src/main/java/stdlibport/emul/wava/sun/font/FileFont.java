@@ -1,44 +1,18 @@
-/*
- * Copyright (c) 2003, 2012, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- * questions.
- */
-
 package wava.sun.font;
 
-import java.lang.ref.Reference;
 import java.awt.FontFormatException;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
+import java.lang.ref.Reference;
 import java.nio.ByteBuffer;
-import wava.sun.java2d.Disposer;
-import wava.sun.java2d.DisposerRecord;
-
-import java.io.IOException;
 import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
+
+import wava.sun.java2d.Disposer;
+import wava.sun.java2d.DisposerRecord;
 
 public abstract class FileFont extends PhysicalFont {
 
@@ -265,18 +239,10 @@ public abstract class FileFont extends PhysicalFont {
                       public Object run() {
                           if (fontFile != null) {
                               try {
-                                  if (tracker != null) {
+                                  if (tracker != null)
                                       tracker.subBytes((int)fontFile.length());
-                                  }
-                                  /* REMIND: is it possible that the file is
-                                   * still open? It will be closed when the
-                                   * font2D is disposed but could this code
-                                   * execute first? If so the file would not
-                                   * be deleted on MS-windows.
-                                   */
+
                                   fontFile.delete();
-                                  /* remove from delete on exit hook list : */
-                                  // FIXME: still need to be refactored
                                   SunFontManager.getInstance().tmpFontFiles.remove(fontFile);
                               } catch (Exception e) {
                               }
@@ -288,47 +254,7 @@ public abstract class FileFont extends PhysicalFont {
     }
 
     protected String getPublicFileName() {
-        SecurityManager sm = System.getSecurityManager();
-        if (sm == null) {
-            return platName;
-        }
-        boolean canReadProperty = true;
-
-        try {
-            sm.checkPropertyAccess("java.io.tmpdir");
-        } catch (SecurityException e) {
-            canReadProperty = false;
-        }
-
-        if (canReadProperty) {
-            return platName;
-        }
-
-        final File f = new File(platName);
-
-        Boolean isTmpFile = Boolean.FALSE;
-        try {
-            isTmpFile = AccessController.doPrivileged(
-                new PrivilegedExceptionAction<Boolean>() {
-                    public Boolean run() {
-                        File tmp = new File(System.getProperty("java.io.tmpdir"));
-                        //try {
-                            String tpath = tmp.getCanonicalPath();
-                            String fpath = f.getCanonicalPath();
-
-                            return (fpath == null) || fpath.startsWith(tpath);
-                        //} catch (IOException e) {
-                        //    return Boolean.TRUE;
-                        //}
-                    }
-                }
-            );
-        } catch (PrivilegedActionException e) {
-            // unable to verify whether value of java.io.tempdir will be
-            // exposed, so return only a name of the font file.
-            isTmpFile = Boolean.TRUE;
-        }
-
-        return  isTmpFile ? "temp file" : platName;
+        return platName;
     }
+
 }

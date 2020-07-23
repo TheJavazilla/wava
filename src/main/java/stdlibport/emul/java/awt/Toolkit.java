@@ -31,7 +31,6 @@ import wava.sun.awt.PeerEvent;
 import wava.sun.awt.SunToolkit;
 import wava.sun.awt.AWTAccessor;
 // TODO WAVA import wava.sun.security.util.SecurityConstants;
-
 // TODO WAVA import wava.sun.util.CoreResourceBundleControl;
 
 /**
@@ -1690,10 +1689,7 @@ public abstract class Toolkit {
      * @see     java.awt.AWTPermission
     */
     public final EventQueue getSystemEventQueue() {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-           // TODO WAVA security.checkPermission(SecurityConstants.AWT.CHECK_AWT_EVENTQUEUE_PERMISSION);
-        }
+        // TODO WAVA security.checkPermission(SecurityConstants.AWT.CHECK_AWT_EVENTQUEUE_PERMISSION);
         return getSystemEventQueueImpl();
     }
 
@@ -2018,14 +2014,11 @@ public abstract class Toolkit {
      */
     public void addAWTEventListener(AWTEventListener listener, long eventMask) {
         AWTEventListener localL = deProxyAWTEventListener(listener);
-
-        if (localL == null) {
+        if (localL == null)
             return;
-        }
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-            // TODO WAVA security.checkPermission(SecurityConstants.AWT.ALL_AWT_EVENTS_PERMISSION);
-        }
+
+        // TODO WAVA security.checkPermission(SecurityConstants.AWT.ALL_AWT_EVENTS_PERMISSION);
+
         synchronized (this) {
             SelectiveAWTEventListener selectiveListener =
                 listener2SelectiveListener.get(localL);
@@ -2088,17 +2081,13 @@ public abstract class Toolkit {
     public void removeAWTEventListener(AWTEventListener listener) {
         AWTEventListener localL = deProxyAWTEventListener(listener);
 
-        if (listener == null) {
+        if (listener == null)
             return;
-        }
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-            // TODO WAVA security.checkPermission(SecurityConstants.AWT.ALL_AWT_EVENTS_PERMISSION);
-        }
+
+        // TODO WAVA security.checkPermission(SecurityConstants.AWT.ALL_AWT_EVENTS_PERMISSION);
 
         synchronized (this) {
-            SelectiveAWTEventListener selectiveListener =
-                listener2SelectiveListener.get(localL);
+            SelectiveAWTEventListener selectiveListener = listener2SelectiveListener.get(localL);
 
             if (selectiveListener != null) {
                 listener2SelectiveListener.remove(localL);
@@ -2107,9 +2096,8 @@ public abstract class Toolkit {
                     calls[i] -= listenerCalls[i];
                     assert calls[i] >= 0: "Negative Listeners count";
 
-                    if (calls[i] == 0) {
+                    if (calls[i] == 0)
                         enabledOnToolkitMask &= ~(1L<<i);
-                    }
                 }
             }
             eventListener = ToolkitEventMulticaster.remove(eventListener,
@@ -2156,10 +2144,8 @@ public abstract class Toolkit {
      * @since 1.4
      */
     public AWTEventListener[] getAWTEventListeners() {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-            // TODO WAVA security.checkPermission(SecurityConstants.AWT.ALL_AWT_EVENTS_PERMISSION);
-        }
+        // TODO WAVA security.checkPermission(SecurityConstants.AWT.ALL_AWT_EVENTS_PERMISSION);
+
         synchronized (this) {
             EventListener[] la = ToolkitEventMulticaster.getListeners(eventListener,AWTEventListener.class);
 
@@ -2208,10 +2194,8 @@ public abstract class Toolkit {
      * @since 1.4
      */
     public AWTEventListener[] getAWTEventListeners(long eventMask) {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-            // TODO WAVA security.checkPermission(SecurityConstants.AWT.ALL_AWT_EVENTS_PERMISSION);
-        }
+        // TODO WAVA security.checkPermission(SecurityConstants.AWT.ALL_AWT_EVENTS_PERMISSION);
+
         synchronized (this) {
             EventListener[] la = ToolkitEventMulticaster.getListeners(eventListener,AWTEventListener.class);
 
@@ -2221,8 +2205,7 @@ public abstract class Toolkit {
                 SelectiveAWTEventListener sael = (SelectiveAWTEventListener)la[i];
                 if ((sael.getEventMask() & eventMask) == eventMask) {
                     //AWTEventListener tempL = sael.getListener();
-                    list.add(new AWTEventListenerProxy(sael.getEventMask(),
-                                                       sael.getListener()));
+                    list.add(new AWTEventListenerProxy(sael.getEventMask(), sael.getListener()));
                 }
             }
             return list.toArray(new AWTEventListener[0]);

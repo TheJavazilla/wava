@@ -12,7 +12,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.peer.FontPeer;
 import java.io.*;
-import java.lang.ref.SoftReference;
+//import java.lang.ref.SoftReference;
 import java.nio.file.Files;
 import java.security.AccessController;
 import java.security.PrivilegedExceptionAction;
@@ -802,20 +802,8 @@ public class Font implements java.io.Serializable
      * font bytes.
      */
     private static boolean hasTempPermission() {
-        if (System.getSecurityManager() == null)
-            return true;
-
-        File f = null;
-        boolean hasPerm = false;
-        try {
-            //f = Files.createTempFile("+~JT", ".tmp").toFile();
-            // TODO f.delete();
-            f = null;
-            hasPerm = true;
-        } catch (Throwable t) {
-            /* inc. any kind of SecurityException */
-        }
-        return hasPerm;
+        return true;
+        // TODO WAVA
     }
 
     /**
@@ -1011,24 +999,15 @@ public class Font implements java.io.Serializable
      * @see GraphicsEnvironment#registerFont(Font)
      * @since 1.5
      */
-    public static Font createFont(int fontFormat, File fontFile)
-        throws java.awt.FontFormatException, java.io.IOException {
-
+    public static Font createFont(int fontFormat, File fontFile) throws java.awt.FontFormatException, java.io.IOException {
         fontFile = new File(fontFile.getPath());
 
-        if (fontFormat != Font.TRUETYPE_FONT &&
-            fontFormat != Font.TYPE1_FONT) {
+        if (fontFormat != Font.TRUETYPE_FONT && fontFormat != Font.TYPE1_FONT)
             throw new IllegalArgumentException ("font format not recognized");
-        }
-        SecurityManager sm = System.getSecurityManager();
-        if (sm != null) {
-            FilePermission filePermission =
-                new FilePermission(fontFile.getPath(), "read");
-            sm.checkPermission(filePermission);
-        }
-        if (!fontFile.canRead()) {
+
+        if (!fontFile.canRead())
             throw new IOException("Can't read " + fontFile);
-        }
+
         return new Font(fontFile, fontFormat, false, null);
     }
 
@@ -1069,9 +1048,7 @@ public class Font implements java.io.Serializable
 
             if (values.getSuperscript() != 0) {
                 // can't get ascent and descent here, recursive call to this fn,
-                // so use pointsize
-                // let users combine super- and sub-scripting
-
+                // so use point size let users combine super- and sub-scripting
                 int superscript = values.getSuperscript();
 
                 double trans = 0;
@@ -1107,9 +1084,8 @@ public class Font implements java.io.Serializable
                 // position of the right gv.
             }
 
-            if (values.isNonDefault(EWIDTH)) {
+            if (values.isNonDefault(EWIDTH))
                 at.scale(values.getWidth(), 1f);
-            }
 
             return at;
         }
@@ -2140,12 +2116,11 @@ public class Font implements java.io.Serializable
         return false;   // REMIND always safe, but prevents caller optimize
     }
 
-    private transient SoftReference<FontLineMetrics> flmref;
+    //private transient SoftReference<FontLineMetrics> flmref;
+    private FontLineMetrics flmref;
     private FontLineMetrics defaultLineMetrics(FontRenderContext frc) {
         FontLineMetrics flm = null;
-        if (flmref == null
-            || (flm = flmref.get()) == null
-            || !flm.frc.equals(frc)) {
+        if (flmref == null || (flm = flmref) == null || !flm.frc.equals(frc)) {
 
             /* The device transform in the frc is not used in obtaining line
              * metrics, although it probably should be: REMIND find why not?
@@ -2153,10 +2128,7 @@ public class Font implements java.io.Serializable
              * just pass identity here
              */
             float [] metrics = new float[8];
-            getFont2D().getFontMetrics(this, identityTx,
-                                       frc.getAntiAliasingHint(),
-                                       frc.getFractionalMetricsHint(),
-                                       metrics);
+            getFont2D().getFontMetrics(this, identityTx, frc.getAntiAliasingHint(), frc.getFractionalMetricsHint(), metrics);
             float ascent  = metrics[0];
             float descent = metrics[1];
             float leading = metrics[2];
@@ -2201,17 +2173,14 @@ public class Font implements java.io.Serializable
             strikethroughOffset += ssOffset;
             underlineOffset += ssOffset;
 
-            CoreMetrics cm = new CoreMetrics(ascent, descent, leading, height,
-                                             baselineIndex, baselineOffsets,
-                                             strikethroughOffset, strikethroughThickness,
-                                             underlineOffset, underlineThickness,
-                                             ssOffset, italicAngle);
+            CoreMetrics cm = new CoreMetrics(ascent, descent, leading, height, baselineIndex, baselineOffsets,
+                                             strikethroughOffset, strikethroughThickness, underlineOffset, underlineThickness, ssOffset, italicAngle);
 
             flm = new FontLineMetrics(0, cm, frc);
-            flmref = new SoftReference<FontLineMetrics>(flm);
+            flmref = flm;//new SoftReference<FontLineMetrics>(flm);
         }
 
-        return (FontLineMetrics)flm.clone();
+        return (FontLineMetrics)flm;
     }
 
     /**

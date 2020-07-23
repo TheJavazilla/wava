@@ -1,27 +1,3 @@
-/*
- * Copyright (c) 2000, 2013, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- * questions.
- */
 package java.beans;
 
 import java.lang.reflect.InvocationHandler;
@@ -35,289 +11,22 @@ import java.security.PrivilegedAction;
 import wava.sun.reflect.misc.MethodUtil;
 import wava.sun.reflect.misc.ReflectUtil;
 
-/**
- * The <code>EventHandler</code> class provides
- * support for dynamically generating event listeners whose methods
- * execute a simple statement involving an incoming event object
- * and a target object.
- * <p>
- * The <code>EventHandler</code> class is intended to be used by interactive tools, such as
- * application builders, that allow developers to make connections between
- * beans. Typically connections are made from a user interface bean
- * (the event <em>source</em>)
- * to an application logic bean (the <em>target</em>). The most effective
- * connections of this kind isolate the application logic from the user
- * interface.  For example, the <code>EventHandler</code> for a
- * connection from a <code>JCheckBox</code> to a method
- * that accepts a boolean value can deal with extracting the state
- * of the check box and passing it directly to the method so that
- * the method is isolated from the user interface layer.
- * <p>
- * Inner classes are another, more general way to handle events from
- * user interfaces.  The <code>EventHandler</code> class
- * handles only a subset of what is possible using inner
- * classes. However, <code>EventHandler</code> works better
- * with the long-term persistence scheme than inner classes.
- * Also, using <code>EventHandler</code> in large applications in
- * which the same interface is implemented many times can
- * reduce the disk and memory footprint of the application.
- * <p>
- * The reason that listeners created with <code>EventHandler</code>
- * have such a small
- * footprint is that the <code>Proxy</code> class, on which
- * the <code>EventHandler</code> relies, shares implementations
- * of identical
- * interfaces. For example, if you use
- * the <code>EventHandler</code> <code>create</code> methods to make
- * all the <code>ActionListener</code>s in an application,
- * all the action listeners will be instances of a single class
- * (one created by the <code>Proxy</code> class).
- * In general, listeners based on
- * the <code>Proxy</code> class require one listener class
- * to be created per <em>listener type</em> (interface),
- * whereas the inner class
- * approach requires one class to be created per <em>listener</em>
- * (object that implements the interface).
- *
- * <p>
- * You don't generally deal directly with <code>EventHandler</code>
- * instances.
- * Instead, you use one of the <code>EventHandler</code>
- * <code>create</code> methods to create
- * an object that implements a given listener interface.
- * This listener object uses an <code>EventHandler</code> object
- * behind the scenes to encapsulate information about the
- * event, the object to be sent a message when the event occurs,
- * the message (method) to be sent, and any argument
- * to the method.
- * The following section gives examples of how to create listener
- * objects using the <code>create</code> methods.
- *
- * <h2>Examples of Using EventHandler</h2>
- *
- * The simplest use of <code>EventHandler</code> is to install
- * a listener that calls a method on the target object with no arguments.
- * In the following example we create an <code>ActionListener</code>
- * that invokes the <code>toFront</code> method on an instance
- * of <code>javax.swing.JFrame</code>.
- *
- * <blockquote>
- *<pre>
- *myButton.addActionListener(
- *    (ActionListener)EventHandler.create(ActionListener.class, frame, "toFront"));
- *</pre>
- * </blockquote>
- *
- * When <code>myButton</code> is pressed, the statement
- * <code>frame.toFront()</code> will be executed.  One could get
- * the same effect, with some additional compile-time type safety,
- * by defining a new implementation of the <code>ActionListener</code>
- * interface and adding an instance of it to the button:
- *
- * <blockquote>
- *<pre>
-//Equivalent code using an inner class instead of EventHandler.
- *myButton.addActionListener(new ActionListener() {
- *    public void actionPerformed(ActionEvent e) {
- *        frame.toFront();
- *    }
- *});
- *</pre>
- * </blockquote>
- *
- * The next simplest use of <code>EventHandler</code> is
- * to extract a property value from the first argument
- * of the method in the listener interface (typically an event object)
- * and use it to set the value of a property in the target object.
- * In the following example we create an <code>ActionListener</code> that
- * sets the <code>nextFocusableComponent</code> property of the target
- * (myButton) object to the value of the "source" property of the event.
- *
- * <blockquote>
- *<pre>
- *EventHandler.create(ActionListener.class, myButton, "nextFocusableComponent", "source")
- *</pre>
- * </blockquote>
- *
- * This would correspond to the following inner class implementation:
- *
- * <blockquote>
- *<pre>
-//Equivalent code using an inner class instead of EventHandler.
- *new ActionListener() {
- *    public void actionPerformed(ActionEvent e) {
- *        myButton.setNextFocusableComponent((Component)e.getSource());
- *    }
- *}
- *</pre>
- * </blockquote>
- *
- * It's also possible to create an <code>EventHandler</code> that
- * just passes the incoming event object to the target's action.
- * If the fourth <code>EventHandler.create</code> argument is
- * an empty string, then the event is just passed along:
- *
- * <blockquote>
- *<pre>
- *EventHandler.create(ActionListener.class, target, "doActionEvent", "")
- *</pre>
- * </blockquote>
- *
- * This would correspond to the following inner class implementation:
- *
- * <blockquote>
- *<pre>
-//Equivalent code using an inner class instead of EventHandler.
- *new ActionListener() {
- *    public void actionPerformed(ActionEvent e) {
- *        target.doActionEvent(e);
- *    }
- *}
- *</pre>
- * </blockquote>
- *
- * Probably the most common use of <code>EventHandler</code>
- * is to extract a property value from the
- * <em>source</em> of the event object and set this value as
- * the value of a property of the target object.
- * In the following example we create an <code>ActionListener</code> that
- * sets the "label" property of the target
- * object to the value of the "text" property of the
- * source (the value of the "source" property) of the event.
- *
- * <blockquote>
- *<pre>
- *EventHandler.create(ActionListener.class, myButton, "label", "source.text")
- *</pre>
- * </blockquote>
- *
- * This would correspond to the following inner class implementation:
- *
- * <blockquote>
- *<pre>
-//Equivalent code using an inner class instead of EventHandler.
- *new ActionListener {
- *    public void actionPerformed(ActionEvent e) {
- *        myButton.setLabel(((JTextField)e.getSource()).getText());
- *    }
- *}
- *</pre>
- * </blockquote>
- *
- * The event property may be "qualified" with an arbitrary number
- * of property prefixes delimited with the "." character. The "qualifying"
- * names that appear before the "." characters are taken as the names of
- * properties that should be applied, left-most first, to
- * the event object.
- * <p>
- * For example, the following action listener
- *
- * <blockquote>
- *<pre>
- *EventHandler.create(ActionListener.class, target, "a", "b.c.d")
- *</pre>
- * </blockquote>
- *
- * might be written as the following inner class
- * (assuming all the properties had canonical getter methods and
- * returned the appropriate types):
- *
- * <blockquote>
- *<pre>
-//Equivalent code using an inner class instead of EventHandler.
- *new ActionListener {
- *    public void actionPerformed(ActionEvent e) {
- *        target.setA(e.getB().getC().isD());
- *    }
- *}
- *</pre>
- * </blockquote>
- * The target property may also be "qualified" with an arbitrary number
- * of property prefixs delimited with the "." character.  For example, the
- * following action listener:
- * <pre>
- *   EventHandler.create(ActionListener.class, target, "a.b", "c.d")
- * </pre>
- * might be written as the following inner class
- * (assuming all the properties had canonical getter methods and
- * returned the appropriate types):
- * <pre>
- *   //Equivalent code using an inner class instead of EventHandler.
- *   new ActionListener {
- *     public void actionPerformed(ActionEvent e) {
- *         target.getA().setB(e.getC().isD());
- *    }
- *}
- *</pre>
- * <p>
- * As <code>EventHandler</code> ultimately relies on reflection to invoke
- * a method we recommend against targeting an overloaded method.  For example,
- * if the target is an instance of the class <code>MyTarget</code> which is
- * defined as:
- * <pre>
- *   public class MyTarget {
- *     public void doIt(String);
- *     public void doIt(Object);
- *   }
- * </pre>
- * Then the method <code>doIt</code> is overloaded.  EventHandler will invoke
- * the method that is appropriate based on the source.  If the source is
- * null, then either method is appropriate and the one that is invoked is
- * undefined.  For that reason we recommend against targeting overloaded
- * methods.
- *
- * @see java.lang.reflect.Proxy
- * @see java.util.EventObject
- *
- * @since 1.4
- *
- * @author Mark Davidson
- * @author Philip Milne
- * @author Hans Muller
- *
- */
 public class EventHandler implements InvocationHandler {
+
     private Object target;
     private String action;
     private final String eventPropertyName;
     private final String listenerMethodName;
     private final AccessControlContext acc = AccessController.getContext();
 
-    /**
-     * Creates a new <code>EventHandler</code> object;
-     * you generally use one of the <code>create</code> methods
-     * instead of invoking this constructor directly.  Refer to
-     * {@link java.beans.EventHandler#create(Class, Object, String, String)
-     * the general version of create} for a complete description of
-     * the <code>eventPropertyName</code> and <code>listenerMethodName</code>
-     * parameter.
-     *
-     * @param target the object that will perform the action
-     * @param action the name of a (possibly qualified) property or method on
-     *        the target
-     * @param eventPropertyName the (possibly qualified) name of a readable property of the incoming event
-     * @param listenerMethodName the name of the method in the listener interface that should trigger the action
-     *
-     * @throws NullPointerException if <code>target</code> is null
-     * @throws NullPointerException if <code>action</code> is null
-     *
-     * @see EventHandler
-     * @see #create(Class, Object, String, String, String)
-     * @see #getTarget
-     * @see #getAction
-     * @see #getEventPropertyName
-     * @see #getListenerMethodName
-     */
     @ConstructorProperties({"target", "action", "eventPropertyName", "listenerMethodName"})
     public EventHandler(Object target, String action, String eventPropertyName, String listenerMethodName) {
         this.target = target;
         this.action = action;
-        if (target == null) {
-            throw new NullPointerException("target must be non-null");
-        }
-        if (action == null) {
-            throw new NullPointerException("action must be non-null");
-        }
+
+        if (target == null) throw new NullPointerException("target must be non-null");
+        if (action == null) throw new NullPointerException("action must be non-null");
+
         this.eventPropertyName = eventPropertyName;
         this.listenerMethodName = listenerMethodName;
     }
@@ -422,9 +131,9 @@ public class EventHandler implements InvocationHandler {
      */
     public Object invoke(final Object proxy, final Method method, final Object[] arguments) {
         AccessControlContext acc = this.acc;
-        if ((acc == null) && (System.getSecurityManager() != null)) {
+        if (acc == null)
             throw new SecurityException("AccessControlContext is not set");
-        }
+
         return AccessController.doPrivileged(new PrivilegedAction<Object>() {
             public Object run() {
                 return invokeInternal(proxy, method, arguments);
@@ -452,8 +161,7 @@ public class EventHandler implements InvocationHandler {
             if (eventPropertyName == null) {     // Nullary method.
                 newArgs = new Object[]{};
                 argTypes = new Class<?>[]{};
-            }
-            else {
+            } else {
                 Object input = applyGetters(arguments[0], getEventPropertyName());
                 newArgs = new Object[]{input};
                 argTypes = new Class<?>[]{input == null ? null :

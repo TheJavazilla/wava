@@ -1,27 +1,3 @@
-/*
- * Copyright (c) 1997, 2013, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- * questions.
- */
 package javax.swing;
 
 import java.awt.AWTEvent;
@@ -40,7 +16,6 @@ import javax.accessibility.Accessible;
 import javax.accessibility.AccessibleContext;
 import javax.accessibility.AccessibleState;
 import javax.accessibility.AccessibleStateSet;
-
 
 /**
  * An extended version of <code>java.awt.Frame</code> that adds support for
@@ -120,11 +95,7 @@ import javax.accessibility.AccessibleStateSet;
  * @author Georges Saab
  * @author David Kloba
  */
-public class JFrame  extends Frame implements WindowConstants,
-                                              Accessible,
-                                              RootPaneContainer,
-                              TransferHandler.HasGetTransferHandler
-{
+public class JFrame  extends Frame implements WindowConstants, Accessible, RootPaneContainer, TransferHandler.HasGetTransferHandler {
     /**
      * The exit application default window close operation. If a window
      * has this set as the close operation and is closed in an applet,
@@ -393,10 +364,7 @@ public class JFrame  extends Frame implements WindowConstants,
         }
 
         if (operation == EXIT_ON_CLOSE) {
-            SecurityManager security = System.getSecurityManager();
-            if (security != null) {
-                security.checkExit(0);
-            }
+            // TODO WAVA security.checkExit(0);
         }
         if (this.defaultCloseOperation != operation) {
             int oldValue = this.defaultCloseOperation;

@@ -186,8 +186,7 @@ public class ObjectOutputStream
      */
     private static final boolean extendedDebugInfo =
         java.security.AccessController.doPrivileged(
-            new sun.security.action.GetBooleanAction(
-                "sun.io.serialization.extendedDebugInfo")).booleanValue();
+            new wava.sun.security.action.GetBooleanAction("sun.io.serialization.extendedDebugInfo")).booleanValue();
 
     /**
      * Creates an ObjectOutputStream that writes to the specified OutputStream.
@@ -245,10 +244,7 @@ public class ObjectOutputStream
      * @see java.io.SerializablePermission
      */
     protected ObjectOutputStream() throws IOException, SecurityException {
-        SecurityManager sm = System.getSecurityManager();
-        if (sm != null) {
-            sm.checkPermission(SUBCLASS_IMPLEMENTATION_PERMISSION);
-        }
+        // TODO WAVA sm.checkPermission(SUBCLASS_IMPLEMENTATION_PERMISSION);
         bout = null;
         handles = null;
         subs = null;
@@ -583,17 +579,12 @@ public class ObjectOutputStream
      * @see SecurityManager#checkPermission
      * @see java.io.SerializablePermission
      */
-    protected boolean enableReplaceObject(boolean enable)
-        throws SecurityException
-    {
-        if (enable == enableReplace) {
+    protected boolean enableReplaceObject(boolean enable) throws SecurityException {
+        if (enable == enableReplace)
             return enable;
-        }
+
         if (enable) {
-            SecurityManager sm = System.getSecurityManager();
-            if (sm != null) {
-                sm.checkPermission(SUBSTITUTION_PERMISSION);
-            }
+            // TODO WAVA sm.checkPermission(SUBSTITUTION_PERMISSION);
         }
         enableReplace = enable;
         return !enableReplace;
@@ -1014,13 +1005,9 @@ public class ObjectOutputStream
      */
     private void verifySubclass() {
         Class<?> cl = getClass();
-        if (cl == ObjectOutputStream.class) {
+        if (cl == ObjectOutputStream.class)
             return;
-        }
-        SecurityManager sm = System.getSecurityManager();
-        if (sm == null) {
-            return;
-        }
+
         processQueue(Caches.subclassAuditsQueue, Caches.subclassAudits);
         WeakClassKey key = new WeakClassKey(cl, Caches.subclassAuditsQueue);
         Boolean result = Caches.subclassAudits.get(key);
@@ -1031,7 +1018,7 @@ public class ObjectOutputStream
         if (result.booleanValue()) {
             return;
         }
-        sm.checkPermission(SUBCLASS_IMPLEMENTATION_PERMISSION);
+        // TODO WAVA sm.checkPermission(SUBCLASS_IMPLEMENTATION_PERMISSION);
     }
 
     /**

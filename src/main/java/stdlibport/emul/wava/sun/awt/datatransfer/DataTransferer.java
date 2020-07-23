@@ -90,7 +90,6 @@ import wava.sun.awt.image.ToolkitImage;
 
 import java.io.FilePermission;
 
-
 /**
  * Provides a set of functions to be shared among the DataFlavor class and
  * platform-specific data transfer implementations.
@@ -1333,14 +1332,9 @@ search:
 
     protected abstract ByteArrayOutputStream convertFileListToBytes(ArrayList<String> fileList) throws IOException;
 
-    private String removeSuspectedData(DataFlavor flavor, final Transferable contents, final String str)
-            throws IOException
-    {
-        if (null == System.getSecurityManager()
-            || !flavor.isMimeTypeEqual("text/uri-list"))
-        {
+    private String removeSuspectedData(DataFlavor flavor, final Transferable contents, final String str) throws IOException {
+        if (!flavor.isMimeTypeEqual("text/uri-list"))
             return str;
-        }
 
 
         String ret_val = "";
@@ -1411,8 +1405,7 @@ search:
                     {
                         File file = castToFile(fileObject);
                         if (file != null &&
-                            (null == System.getSecurityManager() ||
-                            !(isFileInWebstartedCache(file) ||
+                            (!(isFileInWebstartedCache(file) ||
                             isForbiddenToRead(file, userProtectionDomain))))
                         {
                             fileList.add(file.getCanonicalPath());
@@ -1435,9 +1428,7 @@ search:
             filePath = ((File)fileObject).getCanonicalPath();
         } else if (fileObject instanceof String) {
            filePath = (String) fileObject;
-        } else {
-           return null;
-        }
+        } else return null;
         return new File(filePath);
     }
 
@@ -2043,24 +2034,19 @@ search:
      *
      * @param mimeType image MIME type, such as: image/png, image/jpeg, image/gif
      */
-    protected Image standardImageBytesToImage(
-        byte[] bytes, String mimeType) throws IOException
-    {
+    protected Image standardImageBytesToImage(byte[] bytes, String mimeType) throws IOException {
 
         Iterator readerIterator = ImageIO.getImageReadersByMIMEType(mimeType);
 
-        if (!readerIterator.hasNext()) {
-            throw new IOException("No registered service provider can decode " +
-                                  " an image from " + mimeType);
-        }
+        if (!readerIterator.hasNext())
+            throw new IOException("No registered service provider can decode an image from " + mimeType);
 
         IOException ioe = null;
 
         while (readerIterator.hasNext()) {
             ImageReader imageReader = (ImageReader)readerIterator.next();
             try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes)) {
-                ImageInputStream imageInputStream =
-                    ImageIO.createImageInputStream(bais);
+                ImageInputStream imageInputStream = ImageIO.createImageInputStream(bais);
 
                 try {
                     ImageReadParam param = imageReader.getDefaultReadParam();

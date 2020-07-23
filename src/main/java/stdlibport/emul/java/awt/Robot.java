@@ -138,10 +138,7 @@ public class Robot {
 
     /* determine if the security policy allows Robot's to be created */
     private void checkRobotAllowed() {
-        SecurityManager security = System.getSecurityManager();
-        // TODO WAVA if (security != null) {
         // TODO WAVA     security.checkPermission(SecurityConstants.AWT.CREATE_ROBOT_PERMISSION);
-        // TODO WAVA }
     }
 
     /* check if the given device is a screen device */
@@ -428,17 +425,12 @@ public class Robot {
     }
 
     private static void checkValidRect(Rectangle rect) {
-        if (rect.width <= 0 || rect.height <= 0) {
+        if (rect.width <= 0 || rect.height <= 0)
             throw new IllegalArgumentException("Rectangle width and height must be > 0");
-        }
     }
 
     private static void checkScreenCaptureAllowed() {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-         // TODO WAVA security.checkPermission(
-         // TODO WAVA     SecurityConstants.AWT.READ_DISPLAY_PIXELS_PERMISSION);
-        }
+        // TODO WAVA security.checkPermission(SecurityConstants.AWT.READ_DISPLAY_PIXELS_PERMISSION);
     }
 
     /*
@@ -471,9 +463,8 @@ public class Robot {
      * Calls waitForIdle after every event if so desired.
      */
     private void autoWaitForIdle() {
-        if (isAutoWaitForIdle) {
+        if (isAutoWaitForIdle)
             waitForIdle();
-        }
     }
 
     /**

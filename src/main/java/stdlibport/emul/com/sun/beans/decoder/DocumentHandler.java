@@ -7,8 +7,8 @@ import java.beans.ExceptionListener;
 import java.io.IOException;
 import java.io.StringReader;
 
-import java.lang.ref.Reference;
-import java.lang.ref.WeakReference;
+//import java.lang.ref.Reference;
+//import java.lang.ref.WeakReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +26,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import sun.misc.SharedSecrets;
+//import sun.misc.SharedSecrets;
 
 /**
  * The main class to parse JavaBeans XML archive.
@@ -43,7 +43,8 @@ public final class DocumentHandler extends DefaultHandler {
     private final Map<String, Object> environment = new HashMap<>();
     private final List<Object> objects = new ArrayList<>();
 
-    private Reference<ClassLoader> loader;
+    //private Reference<ClassLoader> loader;
+    private ClassLoader loader;
     private ExceptionListener listener;
     private Object owner;
 
@@ -88,20 +89,15 @@ public final class DocumentHandler extends DefaultHandler {
      * @return the class loader used to instantiate objects
      */
     public ClassLoader getClassLoader() {
-        return (this.loader != null)
-                ? this.loader.get()
-                : null;
+        return (this.loader != null) ? this.loader : null;
     }
 
     /**
      * Sets the class loader used to instantiate objects.
-     * If the class loader is not set
-     * then default class loader will be used.
-     *
-     * @param loader  a classloader to use
+     * If the class loader is not set then default class loader will be used.
      */
     public void setClassLoader(ClassLoader loader) {
-        this.loader = new WeakReference<ClassLoader>(loader);
+        this.loader = loader;
     }
 
     /**
@@ -130,8 +126,6 @@ public final class DocumentHandler extends DefaultHandler {
 
     /**
      * Returns the owner of this document handler.
-     *
-     * @return the owner of this document handler
      */
     public Object getOwner() {
         return this.owner;
@@ -139,8 +133,6 @@ public final class DocumentHandler extends DefaultHandler {
 
     /**
      * Sets the owner of this document handler.
-     *
-     * @param owner  the owner of this document handler
      */
     public void setOwner(Object owner) {
         this.owner = owner;
@@ -154,9 +146,8 @@ public final class DocumentHandler extends DefaultHandler {
      */
     public Class<? extends ElementHandler> getElementHandler(String name) {
         Class<? extends ElementHandler> type = this.handlers.get(name);
-        if (type == null) {
+        if (type == null)
             throw new IllegalArgumentException("Unsupported element: " + name);
-        }
         return type;
     }
 
@@ -188,9 +179,8 @@ public final class DocumentHandler extends DefaultHandler {
      * @return the value of the variable
      */
     public Object getVariable(String id) {
-        if (!this.environment.containsKey(id)) {
+        if (!this.environment.containsKey(id))
             throw new IllegalArgumentException("Unbound variable: " + id);
-        }
         return this.environment.get(id);
     }
 
@@ -206,8 +196,6 @@ public final class DocumentHandler extends DefaultHandler {
 
     /**
      * Returns the array of readed objects.
-     *
-     * @return the array of readed objects
      */
     public Object[] getObjects() {
         return this.objects.toArray();
@@ -215,8 +203,6 @@ public final class DocumentHandler extends DefaultHandler {
 
     /**
      * Adds the object to the list of readed objects.
-     *
-     * @param object  the object that is readed from XML document
      */
     void addObject(Object object) {
         this.objects.add(object);
@@ -240,17 +226,7 @@ public final class DocumentHandler extends DefaultHandler {
     }
 
     /**
-     * Parses opening tag of XML element
-     * using corresponding element handler.
-     *
-     * @param uri         the namespace URI, or the empty string
-     *                    if the element has no namespace URI or
-     *                    if namespace processing is not being performed
-     * @param localName   the local name (without prefix), or the empty string
-     *                    if namespace processing is not being performed
-     * @param qName       the qualified name (with prefix), or the empty string
-     *                    if qualified names are not available
-     * @param attributes  the attributes attached to the element
+     * Parses opening tag of XML element using corresponding element handler.
      */
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -259,46 +235,27 @@ public final class DocumentHandler extends DefaultHandler {
             this.handler = getElementHandler(qName).newInstance();
             this.handler.setOwner(this);
             this.handler.setParent(parent);
-        }
-        catch (Exception exception) {
-            throw new SAXException(exception);
-        }
+        } catch (Exception e) {throw new SAXException(e);}
         for (int i = 0; i < attributes.getLength(); i++)
             try {
                 String name = attributes.getQName(i);
                 String value = attributes.getValue(i);
                 this.handler.addAttribute(name, value);
-            }
-            catch (RuntimeException exception) {
-                handleException(exception);
-            }
+            } catch (RuntimeException e) {handleException(e);}
 
         this.handler.startElement();
     }
 
     /**
-     * Parses closing tag of XML element
-     * using corresponding element handler.
-     *
-     * @param uri        the namespace URI, or the empty string
-     *                   if the element has no namespace URI or
-     *                   if namespace processing is not being performed
-     * @param localName  the local name (without prefix), or the empty string
-     *                   if namespace processing is not being performed
-     * @param qName      the qualified name (with prefix), or the empty string
-     *                   if qualified names are not available
+     * Parses closing tag of XML element using corresponding element handler.
      */
     @Override
     public void endElement(String uri, String localName, String qName) {
         try {
             this.handler.endElement();
-        }
-        catch (RuntimeException exception) {
+        } catch (RuntimeException exception) {
             handleException(exception);
-        }
-        finally {
-            this.handler = this.handler.getParent();
-        }
+        } finally {this.handler = this.handler.getParent();}
     }
 
     /**
@@ -312,13 +269,9 @@ public final class DocumentHandler extends DefaultHandler {
     public void characters(char[] chars, int start, int length) {
         if (this.handler != null) {
             try {
-                while (0 < length--) {
+                while (0 < length--)
                     this.handler.addCharacter(chars[start++]);
-                }
-            }
-            catch (RuntimeException exception) {
-                handleException(exception);
-            }
+            } catch (RuntimeException exception) {handleException(exception);}
         }
     }
 
@@ -329,9 +282,8 @@ public final class DocumentHandler extends DefaultHandler {
      * @see #setExceptionListener
      */
     public void handleException(Exception exception) {
-        if (this.listener == null) {
+        if (this.listener == null)
             throw new IllegalStateException(exception);
-        }
         this.listener.exceptionThrown(exception);
     }
 
@@ -341,31 +293,24 @@ public final class DocumentHandler extends DefaultHandler {
      * @param input  the input source to parse
      */
     public void parse(final InputSource input) {
-        if ((this.acc == null) && (null != System.getSecurityManager())) {
-            throw new SecurityException("AccessControlContext is not set");
-        }
+        //if ((this.acc == null) && (null != System.getSecryManer()))
+        //    throw new SecurityException("AccessControlContext is not set");
         AccessControlContext stack = AccessController.getContext();
-        SharedSecrets.getJavaSecurityAccess().doIntersectionPrivilege(new PrivilegedAction<Void>() {
-            public Void run() {
+        //SharedSecrets.getJavaSecurityAccess().doIntersectionPrivilege(new PrivilegedAction<Void>() {
+        //    public Void run() {
                 try {
                     SAXParserFactory.newInstance().newSAXParser().parse(input, DocumentHandler.this);
-                }
-                catch (ParserConfigurationException exception) {
+                } catch (ParserConfigurationException exception) {
                     handleException(exception);
-                }
-                catch (SAXException wrapper) {
+                } catch (SAXException wrapper) {
                     Exception exception = wrapper.getException();
-                    if (exception == null) {
+                    if (exception == null)
                         exception = wrapper;
-                    }
                     handleException(exception);
-                }
-                catch (IOException exception) {
-                    handleException(exception);
-                }
-                return null;
-            }
-        }, stack, this.acc);
+                } catch (IOException exception) {handleException(exception);}
+         //       return null;
+        //    }
+        //}, stack, this.acc);
     }
 
     /**
@@ -378,10 +323,10 @@ public final class DocumentHandler extends DefaultHandler {
     public Class<?> findClass(String name) {
         try {
             return ClassFinder.resolveClass(name, getClassLoader());
-        }
-        catch (ClassNotFoundException exception) {
+        } catch (ClassNotFoundException exception) {
             handleException(exception);
             return null;
         }
     }
+
 }

@@ -47,10 +47,8 @@ public abstract class PrinterJob {
      *          method disallows this thread from creating a print job request
      */
     public static PrinterJob getPrinterJob() {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-            security.checkPrintJobAccess();
-        }
+        // TODO WAVA - security.checkPrintJobAccess();
+
         return (PrinterJob) java.security.AccessController.doPrivileged(
             new java.security.PrivilegedAction() {
             public Object run() {
@@ -81,8 +79,7 @@ public abstract class PrinterJob {
      * @since     1.4
      */
     public static PrintService[] lookupPrintServices() {
-        return PrintServiceLookup.
-            lookupPrintServices(DocFlavor.SERVICE_FORMATTED.PAGEABLE, null);
+        return PrintServiceLookup.lookupPrintServices(DocFlavor.SERVICE_FORMATTED.PAGEABLE, null);
     }
 
 
@@ -122,9 +119,7 @@ public abstract class PrinterJob {
      */
     public static StreamPrintServiceFactory[]
         lookupStreamPrintServices(String mimeType) {
-        return StreamPrintServiceFactory.lookupStreamPrintServiceFactories(
-                                       DocFlavor.SERVICE_FORMATTED.PAGEABLE,
-                                       mimeType);
+        return StreamPrintServiceFactory.lookupStreamPrintServiceFactories(DocFlavor.SERVICE_FORMATTED.PAGEABLE, mimeType);
     }
 
 

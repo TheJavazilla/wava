@@ -1,6 +1,5 @@
 package javax.swing;
 
-
 import javax.swing.plaf.ComponentUI;
 import javax.swing.border.*;
 import javax.swing.event.SwingPropertyChangeSupport;
@@ -45,8 +44,8 @@ import wava.sun.swing.SwingUtilities2;
  * @see UIManager
  * @author Hans Muller
  */
-public class UIDefaults extends Hashtable<Object,Object>
-{
+public class UIDefaults extends Hashtable<Object,Object> {
+
     private static final Object PENDING = new Object();
 
     private SwingPropertyChangeSupport changeSupport;
@@ -1056,23 +1055,19 @@ public class UIDefaults extends Hashtable<Object,Object>
             // In order to pick up the security policy in effect at the
             // time of creation we use a doPrivileged with the
             // AccessControlContext that was in place when this was created.
-            if (acc == null && System.getSecurityManager() != null) {
+            if (acc == null)
                 throw new SecurityException("null AccessControlContext");
-            }
+
             return AccessController.doPrivileged(new PrivilegedAction<Object>() {
                 public Object run() {
                     try {
                         Class<?> c;
                         Object cl;
                         // See if we should use a separate ClassLoader
-                        if (table == null || !((cl = table.get("ClassLoader"))
-                                               instanceof ClassLoader)) {
-                            cl = Thread.currentThread().
-                                        getContextClassLoader();
-                            if (cl == null) {
-                                // Fallback to the system class loader.
-                                cl = ClassLoader.getSystemClassLoader();
-                            }
+                        if (table == null || !((cl = table.get("ClassLoader")) instanceof ClassLoader)) {
+                            cl = Thread.currentThread().getContextClassLoader();
+                            if (cl == null)
+                                cl = ClassLoader.getSystemClassLoader(); // Fallback to the system class loader.
                         }
                         // TODO WAVA ReflectUtil.checkPackageAccess(className);
                         c = Class.forName(className, true, (ClassLoader)cl);

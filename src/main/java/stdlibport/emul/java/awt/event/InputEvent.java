@@ -139,8 +139,7 @@ public abstract class InputEvent extends ComponentEvent {
         NativeLibLoader.loadLibraries();
         if (!GraphicsEnvironment.isHeadless()) initIDs();
 
-        AWTAccessor.setInputEventAccessor(
-            new AWTAccessor.InputEventAccessor() {public int[] getButtonDownMasks() {return InputEvent.getButtonDownMasks();}});
+        AWTAccessor.setInputEventAccessor(new AWTAccessor.InputEventAccessor() {public int[] getButtonDownMasks() {return InputEvent.getButtonDownMasks();}});
     }
 
     /** Initialize JNI field and method IDs for fields that may be accessed from C. */
@@ -155,16 +154,7 @@ public abstract class InputEvent extends ComponentEvent {
 
     private boolean canAccessSystemClipboard() {
         boolean b = false;
-
-        if (!GraphicsEnvironment.isHeadless()) {
-            SecurityManager sm = System.getSecurityManager();
-            if (sm != null) {
-                try {
-                    // TODO sm.checkPermission(SecurityConstants.AWT.ACCESS_CLIPBOARD_PERMISSION);
-                    b = true;
-                } catch (SecurityException se) {}
-            } else b = true;
-        }
+        if (!GraphicsEnvironment.isHeadless()) b = true;
 
         return b;
     }

@@ -6,7 +6,6 @@ import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.awt.im.InputContext;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import java.awt.peer.ComponentPeer;
 import java.awt.peer.WindowPeer;
 import java.beans.PropertyChangeListener;
@@ -17,7 +16,6 @@ import java.io.OptionalDataException;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
-import java.security.AccessController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EventListener;
@@ -32,7 +30,6 @@ import wava.sun.awt.AppContext;
 import wava.sun.awt.CausedFocusEvent;
 import wava.sun.awt.SunToolkit;
 import wava.sun.awt.util.IdentityArrayList;
-import wava.sun.java2d.Disposer;
 import wava.sun.java2d.pipe.Region;
 import wava.sun.security.action.GetPropertyAction;
 // TODO WAVA import wava.sun.security.util.SecurityConstants;
@@ -248,6 +245,7 @@ public class Window extends Container implements Accessible {
      * instead of 'this' so that garbage collection can still take place
      * correctly.
      */
+    //private transient WeakReference<Window> weakThis;
     private transient WeakReference<Window> weakThis;
 
     transient boolean showWithParent;
@@ -1356,19 +1354,14 @@ public class Window extends Container implements Accessible {
 
     private void setWarningString() {
         warningString = null;
-        SecurityManager sm = System.getSecurityManager();
-        if (sm != null) {
+
+        /*if (sm != null) {
             try {
                 // TODO WAVA sm.checkPermission(SecurityConstants.AWT.TOPLEVEL_WINDOW_PERMISSION);
             } catch (SecurityException se) {
-                // make sure the privileged action is only
-                // for getting the property! We don't want the
-                // above checkPermission call to always succeed!
-                warningString = AccessController.doPrivileged(
-                      new GetPropertyAction("awt.appletWarning",
-                                            "Java Applet Window"));
+                warningString = AccessController.doPrivileged(new GetPropertyAction("awt.appletWarning", "Java Applet Window"));
             }
-        }
+        }*/
     }
 
     /**
@@ -1651,10 +1644,7 @@ public class Window extends Container implements Accessible {
             return;
         }
         if (exclusionType == Dialog.ModalExclusionType.TOOLKIT_EXCLUDE) {
-            SecurityManager sm = System.getSecurityManager();
-            if (sm != null) {
-                // TODO WAVA sm.checkPermission(SecurityConstants.AWT.TOOLKIT_MODALITY_PERMISSION);
-            }
+            // TODO WAVA sm.checkPermission(SecurityConstants.AWT.TOOLKIT_MODALITY_PERMISSION);
         }
         modalExclusionType = exclusionType;
 
@@ -2199,10 +2189,7 @@ public class Window extends Container implements Accessible {
      * @since 1.5
      */
     public final void setAlwaysOnTop(boolean alwaysOnTop) throws SecurityException {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-            // TODO WAVA security.checkPermission(SecurityConstants.AWT.SET_WINDOW_ALWAYS_ON_TOP_PERMISSION);
-        }
+        // TODO WAVA security.checkPermission(SecurityConstants.AWT.SET_WINDOW_ALWAYS_ON_TOP_PERMISSION);
 
         boolean oldAlwaysOnTop;
         synchronized(this) {
@@ -2213,9 +2200,8 @@ public class Window extends Container implements Accessible {
             if (isAlwaysOnTopSupported()) {
                 WindowPeer peer = (WindowPeer)this.peer;
                 synchronized(getTreeLock()) {
-                    if (peer != null) {
+                    if (peer != null)
                         peer.updateAlwaysOnTopState();
-                    }
                 }
             }
             firePropertyChange("alwaysOnTop", oldAlwaysOnTop, alwaysOnTop);
@@ -2236,8 +2222,7 @@ public class Window extends Container implements Accessible {
             if (window != null) {
                 try {
                     window.setAlwaysOnTop(alwaysOnTop);
-                } catch (SecurityException ignore) {
-                }
+                } catch (SecurityException ignore) {}
             }
         }
     }

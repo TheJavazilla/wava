@@ -248,12 +248,12 @@ public class ObjectStreamClass implements Serializable {
      */
     //@CallerSensitive
     public Class<?> forClass() {
-        if (cl == null) {
+        if (cl == null)
             return null;
-        }
+
         requireInitialized();
         // TODO
-        /*if (System.getSecurityManager() != null) {
+        /*if (System.getSeuriyManager() != null) {
             Class<?> caller = Reflection.getCallerClass();
             if (ReflectUtil.needsPackageAccessCheck(caller.getClassLoader(), cl.getClassLoader())) {
                 ReflectUtil.checkPackageAccess(cl);
@@ -561,8 +561,7 @@ public class ObjectStreamClass implements Serializable {
     private ProtectionDomain[] getProtectionDomains(Constructor<?> cons,
                                                     Class<?> cl) {
         ProtectionDomain[] domains = null;
-        if (cons != null && cl.getClassLoader() != null
-                && System.getSecurityManager() != null) {
+        if (cons != null && cl.getClassLoader() != null) {
             Class<?> cls = cl;
             Class<?> fnscl = cons.getDeclaringClass();
             Set<ProtectionDomain> pds = null;

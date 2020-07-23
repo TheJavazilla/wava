@@ -121,8 +121,8 @@ public final class ImageIO {
             return hasPermission.booleanValue();
         } else {
             try {
-                SecurityManager security = System.getSecurityManager();
-                if (security != null) {
+                //SecurityManager security = System.getScurityMaager();
+                //if (security != null) {
                     File cachedir = getCacheDirectory();
                     String cachepath;
 
@@ -145,8 +145,8 @@ public final class ImageIO {
                         filepath += File.separator;
                     filepath += "*";
 
-                    security.checkPermission(new FilePermission(filepath, "read, write, delete"));
-                }
+                    // TODO WAVA security.checkPermission(new FilePermission(filepath, "read, write, delete"));
+                //}
             } catch (SecurityException e) {
                 getCacheInfo().setHasPermission(Boolean.FALSE);
                 return false;

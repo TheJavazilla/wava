@@ -903,40 +903,9 @@ public abstract class SunToolkit extends Toolkit
     }
 
     private static void checkPermissions(String filename) {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-            security.checkRead(filename);
-        }
     }
 
     private static void checkPermissions(URL url) {
-        SecurityManager sm = System.getSecurityManager();
-        if (sm != null) {
-            try {
-                java.security.Permission perm =
-                    URLUtil.getConnectPermission(url);
-                if (perm != null) {
-                    try {
-                        sm.checkPermission(perm);
-                    } catch (SecurityException se) {
-                        // fallback to checkRead/checkConnect for pre 1.2
-                        // security managers
-                        if ((perm instanceof java.io.FilePermission) &&
-                            perm.getActions().indexOf("read") != -1) {
-                            sm.checkRead(perm.getName());
-                        } else if ((perm instanceof
-                            java.net.SocketPermission) &&
-                            perm.getActions().indexOf("connect") != -1) {
-                            sm.checkConnect(url.getHost(), url.getPort());
-                        } else {
-                            throw se;
-                        }
-                    }
-                }
-            } catch (java.io.IOException ioe) {
-                    sm.checkConnect(url.getHost(), url.getPort());
-            }
-        }
     }
 
     /**
@@ -1120,10 +1089,7 @@ public abstract class SunToolkit extends Toolkit
     public boolean canPopupOverlapTaskBar() {
         boolean result = true;
         try {
-            //SecurityManager sm = System.getSecurityManager();
-            //if (sm != null) {
-            //    sm.checkPermission(SecurityConstants.AWT.SET_WINDOW_ALWAYS_ON_TOP_PERMISSION);
-            //}
+            // sm.checkPermission(SecurityConstants.AWT.SET_WINDOW_ALWAYS_ON_TOP_PERMISSION);
         } catch (SecurityException se) {
             // There is no permission to show popups over the task bar
             result = false;

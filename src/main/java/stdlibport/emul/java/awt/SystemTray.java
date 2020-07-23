@@ -108,10 +108,7 @@ public class SystemTray {
     static {
         AWTAccessor.setSystemTrayAccessor(
             new AWTAccessor.SystemTrayAccessor() {
-                public void firePropertyChange(SystemTray tray,
-                                               String propertyName,
-                                               Object oldValue,
-                                               Object newValue) {
+                public void firePropertyChange(SystemTray tray, String propertyName, Object oldValue, Object newValue) {
                     tray.firePropertyChange(propertyName, oldValue, newValue);
                 }
             });
@@ -478,10 +475,7 @@ public class SystemTray {
     }
 
     static void checkSystemTrayAllowed() {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-            // TODO WAVA security.checkPermission(SecurityConstants.AWT.ACCESS_SYSTEM_TRAY_PERMISSION);
-        }
+        // TODO WAVA security.checkPermission(SecurityConstants.AWT.ACCESS_SYSTEM_TRAY_PERMISSION);
     }
 
     private static void initializeSystemTrayIfNeeded() {

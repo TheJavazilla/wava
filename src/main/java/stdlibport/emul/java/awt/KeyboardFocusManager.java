@@ -15,7 +15,7 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
 
-import java.lang.ref.WeakReference;
+// TODO WAVA import java.lang.ref.WeakReference;
 
 import java.lang.reflect.Field;
 
@@ -23,6 +23,7 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -367,7 +368,7 @@ public abstract class KeyboardFocusManager
     /**
      * Maps Windows to those Windows' most recent focus owners.
      */
-    private static java.util.Map<Window, WeakReference<Component>> mostRecentFocusOwners = new WeakHashMap<>();
+    private static java.util.Map<Window, Component> mostRecentFocusOwners = new HashMap<>();
 
     /**
      * We cache the permission used to verify that the calling thread is
@@ -1818,63 +1819,52 @@ public abstract class KeyboardFocusManager
      * @see #addKeyEventPostProcessor
      * @see #removeKeyEventPostProcessor
      */
-    protected java.util.List<KeyEventPostProcessor>
-        getKeyEventPostProcessors()
-    {
-        return (keyEventPostProcessors != null)
-            ? (java.util.List)keyEventPostProcessors.clone()
-            : null;
+    protected java.util.List<KeyEventPostProcessor> getKeyEventPostProcessors() {
+        return (keyEventPostProcessors != null) ? (java.util.List)keyEventPostProcessors.clone() : null;
     }
-
-
 
     static void setMostRecentFocusOwner(Component component) {
         Component window = component;
-        while (window != null && !(window instanceof Window)) {
+        while (window != null && !(window instanceof Window))
             window = window.parent;
-        }
-        if (window != null) {
+
+        if (window != null)
             setMostRecentFocusOwner((Window)window, component);
-        }
     }
-    static synchronized void setMostRecentFocusOwner(Window window,
-                                                     Component component) {
+
+    static synchronized void setMostRecentFocusOwner(Window window, Component component) {
         // ATTN: component has a strong reference to window via chain
         // of Component.parent fields.  Since WeakHasMap refers to its
         // values strongly, we need to break the strong link from the
         // value (component) back to its key (window).
-        WeakReference<Component> weakValue = null;
-        if (component != null) {
-            weakValue = new WeakReference<>(component);
-        }
-        mostRecentFocusOwners.put(window, weakValue);
+        //WeakReference<Component> weakValue = null;
+        //if (component != null)
+        //    weakValue = new WeakReference<>(component);
+
+        mostRecentFocusOwners.put(window, component);
     }
+
     static void clearMostRecentFocusOwner(Component comp) {
         Container window;
 
-        if (comp == null) {
+        if (comp == null)
             return;
-        }
 
         synchronized (comp.getTreeLock()) {
             window = comp.getParent();
-            while (window != null && !(window instanceof Window)) {
+            while (window != null && !(window instanceof Window))
                 window = window.getParent();
-            }
         }
 
         synchronized (KeyboardFocusManager.class) {
-            if ((window != null)
-                && (getMostRecentFocusOwner((Window)window) == comp))
-            {
+            if ((window != null) && (getMostRecentFocusOwner((Window)window) == comp))
                 setMostRecentFocusOwner((Window)window, null);
-            }
+
             // Also clear temporary lost component stored in Window
             if (window != null) {
                 Window realWindow = (Window)window;
-                if (realWindow.getTemporaryLostComponent() == comp) {
+                if (realWindow.getTemporaryLostComponent() == comp)
                     realWindow.setTemporaryLostComponent(null);
-                }
             }
         }
     }
@@ -1884,9 +1874,8 @@ public abstract class KeyboardFocusManager
      * javax.swing.JComponent.runInputVerifier() using reflection.
      */
     static synchronized Component getMostRecentFocusOwner(Window window) {
-        WeakReference<Component> weakValue =
-            (WeakReference)mostRecentFocusOwners.get(window);
-        return weakValue == null ? null : (Component)weakValue.get();
+        Component weakValue = mostRecentFocusOwners.get(window);
+        return weakValue == null ? null : weakValue;
     }
 
     /**
@@ -3084,24 +3073,14 @@ public abstract class KeyboardFocusManager
 
     private static HeavyweightFocusRequest getFirstHWRequest() {
         synchronized(heavyweightRequests) {
-            return (heavyweightRequests.size() > 0)
-                ? heavyweightRequests.getFirst()
-                : null;
+            return (heavyweightRequests.size() > 0) ? heavyweightRequests.getFirst() : null;
         }
     }
 
-    private static void checkReplaceKFMPermission()
-        throws SecurityException
-    {
-        SecurityManager security = System.getSecurityManager();
-        if (security != null) {
-            if (replaceKeyboardFocusManagerPermission == null) {
-                replaceKeyboardFocusManagerPermission =
-                    new AWTPermission("replaceKeyboardFocusManager");
-            }
-            security.
-                checkPermission(replaceKeyboardFocusManagerPermission);
-        }
+    private static void checkReplaceKFMPermission() throws SecurityException {
+        // TODO WAVA - Add SM
+        if (replaceKeyboardFocusManagerPermission == null)
+            replaceKeyboardFocusManagerPermission = new AWTPermission("replaceKeyboardFocusManager");
     }
 
     // Checks if this KeyboardFocusManager instance is the current KFM,
@@ -3117,11 +3096,9 @@ public abstract class KeyboardFocusManager
     // permissions we can't throw SecurityException because it would contradict
     // the security concepts. In this case the trusted client code is responsible
     // for calling the secured methods from KFM instance which is not current.
-    private void checkKFMSecurity()
-        throws SecurityException
-    {
-        if (this != getCurrentKeyboardFocusManager()) {
+    private void checkKFMSecurity() throws SecurityException {
+        if (this != getCurrentKeyboardFocusManager())
             checkReplaceKFMPermission();
-        }
     }
+
 }

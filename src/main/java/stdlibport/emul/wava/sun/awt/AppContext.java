@@ -16,8 +16,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
 import java.beans.PropertyChangeSupport;
+import java.lang.ref.WeakReference;
 import java.beans.PropertyChangeListener;
-import java.lang.ref.SoftReference;
+// TODO WAVA import java.lang.ref.WeakReference;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -223,18 +224,14 @@ public final class AppContext {
                         if (threadGroup == null) {
                             // We've got up to the root thread group and did not find an AppContext
                             // Try to get it from the security manager
-                            SecurityManager securityManager = System.getSecurityManager();
-                            if (securityManager != null) {
+
+                            // TODO WAVA
+                            /*if (securityManager != null) {
                                 ThreadGroup smThreadGroup = securityManager.getThreadGroup();
                                 if (smThreadGroup != null) {
-                                    /*
-                                     * If we get this far then it's likely that
-                                     * the ThreadGroup does not actually belong
-                                     * to the applet, so do not cache it.
-                                     */
                                     return threadGroup2appContext.get(smThreadGroup);
                                 }
-                            }
+                            }*/
                             return null;
                         }
                         context = threadGroup2appContext.get(threadGroup);
@@ -270,7 +267,6 @@ public final class AppContext {
     }
 
     private final static AppContext getExecutionAppContext() {
-        SecurityManager securityManager = System.getSecurityManager();
         //if ((securityManager != null) && (securityManager instanceof AWTSecurityManager)) {
         //    AWTSecurityManager awtSecMgr = (AWTSecurityManager) securityManager;
         //    AppContext secAppContext = awtSecMgr.getAppContext();
@@ -722,7 +718,8 @@ public final class AppContext {
 
     // Set up JavaAWTAccess in SharedSecrets
     static {
-        sun.misc.SharedSecrets.setJavaAWTAccess(new sun.misc.JavaAWTAccess() {
+        // TODO WAVA
+        /*wava.sun.misc.SharedSecrets.setJavaAWTAccess(new wava.sun.misc.JavaAWTAccess() {
             private boolean hasRootThreadGroup(final AppContext ecx) {
                 return AccessController.doPrivileged(new PrivilegedAction<Boolean>() {
                     @Override
@@ -732,15 +729,6 @@ public final class AppContext {
                 });
             }
 
-            /**
-             * Returns the AppContext used for applet logging isolation, or null if
-             * the default global context can be used.
-             * If there's no applet, or if the caller is a stand alone application,
-             * or running in the main app context, returns null.
-             * Otherwise, returns the AppContext of the calling applet.
-             * @return null if the global default context can be used,
-             *         an AppContext otherwise.
-             **/
             public Object getAppletContext() {
                 // There's no AppContext: return null.
                 // No need to call getAppContext() if numAppContext == 0:
@@ -784,22 +772,20 @@ public final class AppContext {
                 return isMainAppContext ? null : ecx;
             }
 
-        });
+        });*/
     }
 
-    public static <T> T getSoftReferenceValue(Object key,
-            Supplier<T> supplier) {
+    public static <T> T getWeakReferenceValue(Object key, Supplier<T> supplier) {
 
         final AppContext appContext = AppContext.getAppContext();
-        SoftReference<T> ref = (SoftReference<T>) appContext.get(key);
+        WeakReference<T> ref = (WeakReference<T>) appContext.get(key);
         if (ref != null) {
             final T object = ref.get();
-            if (object != null) {
+            if (object != null)
                 return object;
-            }
         }
         final T object = supplier.get();
-        ref = new SoftReference<>(object);
+        ref = new WeakReference<>(object);
         appContext.put(key, ref);
         return object;
     }

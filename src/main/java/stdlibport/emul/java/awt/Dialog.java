@@ -76,9 +76,7 @@ public class Dialog extends Window {
     static {
         /* ensure that the necessary native libraries are loaded */
         Toolkit.loadLibraries();
-        if (!GraphicsEnvironment.isHeadless()) {
-            initIDs();
-        }
+        if (!GraphicsEnvironment.isHeadless()) initIDs();
     }
 
     /**
@@ -1475,29 +1473,22 @@ public class Dialog extends Window {
      * This method should be called on the getTreeLock() lock.
      */
     boolean shouldBlock(Window w) {
-        if (!isVisible_NoClientCode() ||
-            (!w.isVisible_NoClientCode() && !w.isInShow) ||
-            isInHide ||
-            (w == this) ||
-            !isModal_NoClientCode())
-        {
+        if (!isVisible_NoClientCode() || (!w.isVisible_NoClientCode() && !w.isInShow) || isInHide || (w == this) || !isModal_NoClientCode())
             return false;
-        }
-        if ((w instanceof Dialog) && ((Dialog)w).isInHide) {
+
+        if ((w instanceof Dialog) && ((Dialog)w).isInHide)
             return false;
-        }
+
         // check if w is from children hierarchy
         // fix for 6271546: we should also take into consideration child hierarchies
         // of this dialog's blockers
         Window blockerToCheck = this;
         while (blockerToCheck != null) {
             Component c = w;
-            while ((c != null) && (c != blockerToCheck)) {
+            while ((c != null) && (c != blockerToCheck))
                 c = c.getParent_NoClientCode();
-            }
-            if (c == blockerToCheck) {
+            if (c == blockerToCheck)
                 return false;
-            }
             blockerToCheck = blockerToCheck.getModalBlocker();
         }
         switch (modalityType) {
@@ -1508,16 +1499,12 @@ public class Dialog extends Window {
                     // application- and toolkit-excluded windows are not blocked by
                     // document-modal dialogs from outside their children hierarchy
                     Component c = this;
-                    while ((c != null) && (c != w)) {
+                    while ((c != null) && (c != w))
                         c = c.getParent_NoClientCode();
-                    }
                     return c == w;
-                } else {
-                    return getDocumentRoot() == w.getDocumentRoot();
-                }
+                } else return getDocumentRoot() == w.getDocumentRoot();
             case APPLICATION_MODAL:
-                return !w.isModalExcluded(ModalExclusionType.APPLICATION_EXCLUDE) &&
-                    (appContext == w.appContext);
+                return !w.isModalExcluded(ModalExclusionType.APPLICATION_EXCLUDE) && (appContext == w.appContext);
             case TOOLKIT_MODAL:
                 return !w.isModalExcluded(ModalExclusionType.TOOLKIT_EXCLUDE);
         }
@@ -1525,11 +1512,10 @@ public class Dialog extends Window {
         return false;
     }
 
-    /*
+    /**
      * Adds the given top-level window to the list of blocked
      * windows for this dialog and marks it as modal blocked.
-     * If the window is already blocked by some modal dialog,
-     * does nothing.
+     * If the window is already blocked by some modal dialog, does nothing.
      */
     void blockWindow(Window w) {
         if (!w.isModalBlocked()) {
@@ -1540,17 +1526,15 @@ public class Dialog extends Window {
 
     void blockWindows(java.util.List<Window> toBlock) {
         DialogPeer dpeer = (DialogPeer)peer;
-        if (dpeer == null) {
+        if (dpeer == null)
             return;
-        }
+
         Iterator<Window> it = toBlock.iterator();
         while (it.hasNext()) {
             Window w = it.next();
-            if (!w.isModalBlocked()) {
+            if (!w.isModalBlocked())
                 w.setModalBlocked(this, true, false);
-            } else {
-                it.remove();
-            }
+            else it.remove();
         }
         dpeer.blockWindows(toBlock);
         blockedWindows.addAll(toBlock);
@@ -1585,24 +1569,13 @@ public class Dialog extends Window {
     }
 
     private void checkModalityPermission(ModalityType mt) {
-        if (mt == ModalityType.TOOLKIT_MODAL) {
-            SecurityManager sm = System.getSecurityManager();
-            if (sm != null) {
-                // TODO WAVA
-                //sm.checkPermission(
-                //    SecurityConstants.AWT.TOOLKIT_MODALITY_PERMISSION
-                //);
-            }
-        }
+        // TODO WAVA - Add SM
     }
 
-    private void readObject(ObjectInputStream s)
-        throws ClassNotFoundException, IOException, HeadlessException
-    {
+    private void readObject(ObjectInputStream s) throws ClassNotFoundException, IOException, HeadlessException {
         GraphicsEnvironment.checkHeadless();
 
-        java.io.ObjectInputStream.GetField fields =
-            s.readFields();
+        java.io.ObjectInputStream.GetField fields = s.readFields();
 
         ModalityType localModalityType = (ModalityType)fields.get("modalityType", null);
 
@@ -1616,9 +1589,7 @@ public class Dialog extends Window {
         if (localModalityType == null) {
             this.modal = fields.get("modal", false);
             setModal(modal);
-        } else {
-            this.modalityType = localModalityType;
-        }
+        } else this.modalityType = localModalityType;
 
         this.resizable = fields.get("resizable", true);
         this.undecorated = fields.get("undecorated", false);
@@ -1627,30 +1598,20 @@ public class Dialog extends Window {
         blockedWindows = new IdentityArrayList<>();
 
         SunToolkit.checkAndSetPolicy(this);
-
         initialized = true;
-
     }
 
-    /*
-     * --- Accessibility Support ---
-     *
-     */
+    /* --- Accessibility Support --- */
 
     /**
      * Gets the AccessibleContext associated with this Dialog.
      * For dialogs, the AccessibleContext takes the form of an
      * AccessibleAWTDialog.
      * A new AccessibleAWTDialog instance is created if necessary.
-     *
-     * @return an AccessibleAWTDialog that serves as the
-     *         AccessibleContext of this Dialog
-     * @since 1.3
      */
     public AccessibleContext getAccessibleContext() {
-        if (accessibleContext == null) {
+        if (accessibleContext == null)
             accessibleContext = new AccessibleAWTDialog();
-        }
         return accessibleContext;
     }
 
@@ -1658,13 +1619,9 @@ public class Dialog extends Window {
      * This class implements accessibility support for the
      * <code>Dialog</code> class.  It provides an implementation of the
      * Java Accessibility API appropriate to dialog user-interface elements.
-     * @since 1.3
      */
-    protected class AccessibleAWTDialog extends AccessibleAWTWindow
-    {
-        /*
-         * JDK 1.3 serialVersionUID
-         */
+    protected class AccessibleAWTDialog extends AccessibleAWTWindow {
+
         private static final long serialVersionUID = 4837230331833941201L;
 
         /**
@@ -1687,17 +1644,15 @@ public class Dialog extends Window {
          */
         public AccessibleStateSet getAccessibleStateSet() {
             AccessibleStateSet states = super.getAccessibleStateSet();
-            if (getFocusOwner() != null) {
+            if (getFocusOwner() != null)
                 states.add(AccessibleState.ACTIVE);
-            }
-            if (isModal()) {
-                states.add(AccessibleState.MODAL);
-            }
-            if (isResizable()) {
-                states.add(AccessibleState.RESIZABLE);
-            }
+
+            if (isModal()) states.add(AccessibleState.MODAL);
+            if (isResizable()) states.add(AccessibleState.RESIZABLE);
+
             return states;
         }
 
-    } // inner class AccessibleAWTDialog
+    }
+
 }

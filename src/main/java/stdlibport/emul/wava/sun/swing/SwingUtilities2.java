@@ -1,28 +1,3 @@
-/*
- * Copyright (c) 2002, 2019, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- * questions.
- */
-
 package wava.sun.swing;
 
 import java.security.*;
@@ -1312,30 +1287,15 @@ public class SwingUtilities2 {
     */
    public static boolean canAccessSystemClipboard() {
        boolean canAccess = false;
-       if (!GraphicsEnvironment.isHeadless()) {
-           SecurityManager sm = System.getSecurityManager();
-           if (sm == null) {
-               canAccess = true;
-           } else {
-               try {
-                   // TODO WAVA sm.checkPermission(SecurityConstants.AWT.ACCESS_CLIPBOARD_PERMISSION);
-                   canAccess = true;
-               } catch (SecurityException e) {
-               }
-               if (canAccess && ! isTrustedContext()) {
-                   canAccess = canCurrentEventAccessSystemClipboard(true);
-               }
-           }
-       }
+       if (!GraphicsEnvironment.isHeadless())
+           canAccess = true;
        return canAccess;
    }
     /**
-    * Returns true if EventQueue.getCurrentEvent() has the permissions to
-     * access the system clipboard
+     * Returns true if EventQueue.getCurrentEvent() has the permissions to access the system clipboard
      */
     public static boolean canCurrentEventAccessSystemClipboard() {
-        return  isTrustedContext()
-            || canCurrentEventAccessSystemClipboard(false);
+        return isTrustedContext() || canCurrentEventAccessSystemClipboard(false);
     }
 
     /**
@@ -1345,8 +1305,7 @@ public class SwingUtilities2 {
      * @param e AWTEvent to check
      */
     public static boolean canEventAccessSystemClipboard(AWTEvent e) {
-        return isTrustedContext()
-            || canEventAccessSystemClipboard(e, false);
+        return isTrustedContext() || canEventAccessSystemClipboard(e, false);
     }
 
     /**
@@ -1453,10 +1412,8 @@ public class SwingUtilities2 {
      * @param modifiers a set of modifiers
      */
     public static void checkAccess(int modifiers) {
-        if (System.getSecurityManager() != null
-                && !Modifier.isPublic(modifiers)) {
+        if (!Modifier.isPublic(modifiers))
             throw new SecurityException("Resource is not accessible");
-        }
     }
 
     /**
@@ -1478,9 +1435,7 @@ public class SwingUtilities2 {
      *
      */
     private static boolean isTrustedContext() {
-        return (System.getSecurityManager() == null)
-            || (AppContext.getAppContext().
-                get(UntrustedClipboardAccess) == null);
+        return (AppContext.getAppContext(). get(UntrustedClipboardAccess) == null);
     }
 
     public static String displayPropertiesToCSS(Font font, Color fg) {
@@ -1492,26 +1447,25 @@ public class SwingUtilities2 {
             rule.append(" font-size: ");
             rule.append(font.getSize());
             rule.append("pt ;");
-            if (font.isBold()) {
+            if (font.isBold())
                 rule.append(" font-weight: 700 ; ");
-            }
-            if (font.isItalic()) {
+
+            if (font.isItalic())
                 rule.append(" font-style: italic ; ");
-            }
         }
         if (fg != null) {
             rule.append(" color: #");
-            if (fg.getRed() < 16) {
+            if (fg.getRed() < 16)
                 rule.append('0');
-            }
+
             rule.append(Integer.toHexString(fg.getRed()));
-            if (fg.getGreen() < 16) {
+            if (fg.getGreen() < 16)
                 rule.append('0');
-            }
+
             rule.append(Integer.toHexString(fg.getGreen()));
-            if (fg.getBlue() < 16) {
+            if (fg.getBlue() < 16)
                 rule.append('0');
-            }
+
             rule.append(Integer.toHexString(fg.getBlue()));
             rule.append(" ; ");
         }
@@ -1536,9 +1490,7 @@ public class SwingUtilities2 {
      *         <code>UIResource</code> for the image,
      *         or null if it cannot be found
      */
-    public static Object makeIcon(final Class<?> baseClass,
-                                  final Class<?> rootClass,
-                                  final String imageFile) {
+    public static Object makeIcon(final Class<?> baseClass, final Class<?> rootClass, final String imageFile) {
 
         return new UIDefaults.LazyValue() {
             public Object createValue(UIDefaults table) {

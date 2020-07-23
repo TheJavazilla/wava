@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Objects;
 
-import static sun.security.util.SecurityConstants.GET_CLASSLOADER_PERMISSION;
+// TODO WAVA import static sun.security.util.SecurityConstants.GET_CLASSLOADER_PERMISSION;
 
 /**
  * A {@code DataFlavor} provides meta information about data. {@code DataFlavor}
@@ -110,23 +110,16 @@ public class DataFlavor implements Externalizable, Cloneable {
     protected final static Class<?> tryToLoadClass(String className, ClassLoader fallback) throws ClassNotFoundException {
         // TODO WAVA ReflectUtil.checkPackageAccess(className);
         try {
-            SecurityManager sm = System.getSecurityManager();
-            if (sm != null) {
-                sm.checkPermission(GET_CLASSLOADER_PERMISSION);
-            }
             ClassLoader loader = ClassLoader.getSystemClassLoader();
             try {
-                // bootstrap class loader and system class loader if present
-                return Class.forName(className, true, loader);
-            }
-            catch (ClassNotFoundException exception) {
+                return Class.forName(className, true, loader);// bootstrap class loader and system class loader if present
+            } catch (ClassNotFoundException exception) {
                 // thread context class loader if and only if present
                 loader = Thread.currentThread().getContextClassLoader();
                 if (loader != null) {
                     try {
                         return Class.forName(className, true, loader);
-                    }
-                    catch (ClassNotFoundException e) {
+                    } catch (ClassNotFoundException e) {
                         // fallback to user's class loader
                     }
                 }
@@ -143,9 +136,7 @@ public class DataFlavor implements Externalizable, Cloneable {
     static private DataFlavor createConstant(Class<?> rc, String prn) {
         try {
             return new DataFlavor(rc, prn);
-        } catch (Exception e) {
-            return null;
-        }
+        } catch (Exception e) {return null;}
     }
 
     /*
@@ -154,9 +145,7 @@ public class DataFlavor implements Externalizable, Cloneable {
     static private DataFlavor createConstant(String mt, String prn) {
         try {
             return new DataFlavor(mt, prn);
-        } catch (Exception e) {
-            return null;
-        }
+        } catch (Exception e) {return null;}
     }
 
     /*
@@ -164,11 +153,8 @@ public class DataFlavor implements Externalizable, Cloneable {
      */
     static private DataFlavor initHtmlDataFlavor(String htmlFlavorType) {
         try {
-            return new DataFlavor ("text/html; class=java.lang.String;document=" +
-                                       htmlFlavorType + ";charset=Unicode");
-        } catch (Exception e) {
-            return null;
-        }
+            return new DataFlavor("text/html; class=java.lang.String;document=" + htmlFlavorType + ";charset=Unicode");
+        } catch (Exception e) {return null;}
     }
 
     /**
@@ -314,15 +300,14 @@ public class DataFlavor implements Externalizable, Cloneable {
      */
     private DataFlavor(String primaryType, String subType, MimeTypeParameterList params, Class<?> representationClass, String humanPresentableName) {
         super();
-        if (primaryType == null) {
+        if (primaryType == null)
             throw new NullPointerException("primaryType");
-        }
-        if (subType == null) {
+
+        if (subType == null)
             throw new NullPointerException("subType");
-        }
-        if (representationClass == null) {
+
+        if (representationClass == null)
             throw new NullPointerException("representationClass");
-        }
 
         if (params == null) params = new MimeTypeParameterList();
 
@@ -364,9 +349,8 @@ public class DataFlavor implements Externalizable, Cloneable {
      */
     public DataFlavor(Class<?> representationClass, String humanPresentableName) {
         this("application", "x-java-serialized-object", null, representationClass, humanPresentableName);
-        if (representationClass == null) {
+        if (representationClass == null)
             throw new NullPointerException("representationClass");
-        }
     }
 
     /**

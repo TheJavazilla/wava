@@ -37,9 +37,7 @@ import wava.sun.java2d.pipe.LoopBasedPipe;
  * has not lost its underlying storage (surfaceLost) since you
  * retrieved the tracker.
  */
-public abstract class SurfaceData
-    implements Transparency, DisposerTarget, StateTrackable, Surface
-{
+public abstract class SurfaceData implements Transparency, DisposerTarget, StateTrackable, Surface {
     private long pData;
     private boolean valid;
     private boolean surfaceLost; // = false;
@@ -946,14 +944,8 @@ public abstract class SurfaceData
      * of this surface.
      */
     protected void checkCustomComposite() {
-        SecurityManager sm = System.getSecurityManager();
-        if (sm != null) {
-            if (compPermission == null) {
-                compPermission =
-                    new java.awt.AWTPermission("readDisplayPixels");
-            }
-            sm.checkPermission(compPermission);
-        }
+        if (compPermission == null)
+            compPermission = new java.awt.AWTPermission("readDisplayPixels");
     }
 
     /**

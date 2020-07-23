@@ -385,20 +385,15 @@ public class Win32ShellFolderManager2 extends ShellFolderManager {
     }
 
     private static File checkFile(File file) {
-        SecurityManager sm = System.getSecurityManager();
-        return (sm == null || file == null) ? file : checkFile(file, sm);
+        return (file == null) ? file : checkFile(file, null);
     }
 
-    private static File checkFile(File file, SecurityManager sm) {
+    private static File checkFile(File file, Object sm) {
         try {
-            sm.checkRead(file.getPath());
-
             if (file instanceof Win32ShellFolder2) {
                 Win32ShellFolder2 f = (Win32ShellFolder2)file;
                 if (f.isLink()) {
                     Win32ShellFolder2 link = (Win32ShellFolder2)f.getLinkLocation();
-                    if (link != null)
-                        sm.checkRead(link.getPath());
                 }
             }
             return file;
@@ -408,22 +403,20 @@ public class Win32ShellFolderManager2 extends ShellFolderManager {
     }
 
     static File[] checkFiles(File[] files) {
-        SecurityManager sm = System.getSecurityManager();
-        if (sm == null || files == null || files.length == 0) {
+        if (files == null || files.length == 0)
             return files;
-        }
-        return checkFiles(Arrays.stream(files), sm);
+
+        return checkFiles(Arrays.stream(files), null);
     }
 
     private static File[] checkFiles(List<File> files) {
-        SecurityManager sm = System.getSecurityManager();
-        if (sm == null || files.isEmpty()) {
+        if (files.isEmpty())
             return files.toArray(new File[files.size()]);
-        }
-        return checkFiles(files.stream(), sm);
+
+        return checkFiles(files.stream(), null);
     }
 
-    private static File[] checkFiles(Stream<File> filesStream, SecurityManager sm) {
+    private static File[] checkFiles(Stream<File> filesStream, Object sm) {
         return filesStream.filter((file) -> checkFile(file, sm) != null)
                 .toArray(File[]::new);
     }

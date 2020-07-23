@@ -1,28 +1,3 @@
-/*
- * Copyright (c) 1995, 2012, Oracle and/or its affiliates. All rights reserved.
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This code is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 only, as
- * published by the Free Software Foundation.  Oracle designates this
- * particular file as subject to the "Classpath" exception as provided
- * by Oracle in the LICENSE file that accompanied this code.
- *
- * This code is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * version 2 for more details (a copy is included in the LICENSE file that
- * accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version
- * 2 along with this work; if not, write to the Free Software Foundation,
- * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- *
- * Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
- * or visit www.oracle.com if you need additional information or have any
- * questions.
- */
-
 package wava.sun.awt.image;
 
 import java.lang.ref.WeakReference;
@@ -134,22 +109,14 @@ public abstract class ImageWatched {
             return this;
         }
 
-        private static boolean update(ImageObserver iw, AccessControlContext acc,
-                                      Image img, int info,
-                                      int x, int y, int w, int h) {
+        private static boolean update(ImageObserver iw, AccessControlContext acc, Image img, int info, int x, int y, int w, int h) {
+            if (acc != null)
+                return AccessController.doPrivileged((PrivilegedAction<Boolean>) () -> { return iw.imageUpdate(img, info, x, y, w, h); }, acc);
 
-            if (acc != null || System.getSecurityManager() != null) {
-                return AccessController.doPrivileged(
-                       (PrivilegedAction<Boolean>) () -> {
-                            return iw.imageUpdate(img, info, x, y, w, h);
-                      }, acc);
-            }
             return false;
         }
 
-        public boolean newInfo(Image img, int info,
-                               int x, int y, int w, int h)
-        {
+        public boolean newInfo(Image img, int info, int x, int y, int w, int h) {
             // Note tail recursion because items are added LIFO.
             boolean ret = next.newInfo(img, info, x, y, w, h);
             ImageObserver myiw = myref.get();
@@ -167,9 +134,9 @@ public abstract class ImageWatched {
     }
 
     public synchronized void addWatcher(ImageObserver iw) {
-        if (iw != null && !isWatcher(iw)) {
+        if (iw != null && !isWatcher(iw))
             watcherList = new WeakLink(iw, watcherList);
-        }
+
         watcherList = watcherList.removeWatcher(null);
     }
 
@@ -181,9 +148,8 @@ public abstract class ImageWatched {
         synchronized (this) {
             watcherList = watcherList.removeWatcher(iw);
         }
-        if (watcherList == endlink) {
+        if (watcherList == endlink)
             notifyWatcherListEmpty();
-        }
     }
 
     public boolean isWatcherListEmpty() {
@@ -201,4 +167,5 @@ public abstract class ImageWatched {
     }
 
     protected abstract void notifyWatcherListEmpty();
+
 }

@@ -56,9 +56,11 @@ final public class ImageCache {
     // Reference queue for tracking lost softreferences to images in the cache
     private final ReferenceQueue<Image> referenceQueue = new ReferenceQueue<>();
 
+    private static ImageCache INSTANCE;
     public static ImageCache getInstance() {
-        return AppContext.getSoftReferenceValue(ImageCache.class,
-                () -> new ImageCache());
+        if (null == INSTANCE)
+            INSTANCE = new ImageCache();
+        return INSTANCE;
     }
 
     ImageCache(final int maxPixelCount) {
@@ -103,7 +105,7 @@ final public class ImageCache {
 
             // check if currently in map
             if (ref != null) {
-                if (ref.get() != null) {
+                if (ref != null) {
                     return;
                 }
                 // soft image has been removed
@@ -117,7 +119,7 @@ final public class ImageCache {
             currentPixelCount += newPixelCount;
             // clean out lost references if not enough space
             if (currentPixelCount > maxPixelCount) {
-                while ((ref = (ImageSoftReference)referenceQueue.poll()) != null) {
+                while ((ref = (ImageSoftReference) (Object)(referenceQueue.poll()) ) != null) {
                     //reference lost
                     map.remove(ref.key);
                     currentPixelCount -= ref.key.getPixelCount();
@@ -150,7 +152,7 @@ final public class ImageCache {
         int getPixelCount();
     }
 
-    private static class ImageSoftReference extends SoftReference<Image> {
+    private static class ImageSoftReference extends WeakReference<Image> {
 
         final PixelsKey key;
 
@@ -159,5 +161,6 @@ final public class ImageCache {
             super(referent, q);
             this.key = key;
         }
+
     }
 }
