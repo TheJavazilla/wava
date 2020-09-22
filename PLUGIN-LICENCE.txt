@@ -1,6 +1,6 @@
-Fungus Software Product Licence
+Javazilla Product Licence
 
-Copyright (C) 2020 Fungus Software <https://fungus-soft.com/>
+Copyright (C) 2020 Javazilla Software <https://javazilla.com/>
 
 By downloading, using, and/or modifying this piece of software you agree to the following terms and conditions:
 
@@ -14,5 +14,5 @@ to use, modifiy, merge, and/or redistribute, and to permit persons to whom the S
 - The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 - The software must not be used for any commercial purpose, see the commercial use section below.
 
-Permission of commercial use is hereby granted to any paying customer who has purchased a valid product key for this piece of software from Fungus Software or an authorized affiliate.
+Permission of commercial use is hereby granted to any paying customer who has purchased a valid product key for this piece of software from Javazilla or an authorized affiliate.
 This will provide one year of the rights to use, modifiy, merge, and/or redistribute.

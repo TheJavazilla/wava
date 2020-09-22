@@ -14,20 +14,20 @@ There is a provided maven plugin to use this with maven
 ## Maven Plugin
 We provide a Maven plugin that you can add to your existing Java project.
 
-Usage of this maven plugin is governed by the [Fungus Product Licence v1.0](https://fungus-soft.com/wava/PLUGIN-LICENCE.txt)
+Usage of this maven plugin is governed by the [Javazilla Product Licence](https://fungus-soft.com/wava/PLUGIN-LICENCE.txt)
 
 Repository:
 ```
 <pluginRepository>
-    <id>fungus-software</id>
-    <url>https://repo.fungus-soft.com/</url>
+    <id>javazilla-software</id>
+    <url>https://repo.javazilla.com/</url>
 </pluginRepository>
 ```
 Plugin:
 ```
 <plugin>
-    <groupId>com.fungus-soft</groupId>
-    <artifactId>java-2-gwt-plugin</artifactId>
+    <groupId>com.javazilla</groupId>
+    <artifactId>wava-plugin</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <executions>
         <execution>

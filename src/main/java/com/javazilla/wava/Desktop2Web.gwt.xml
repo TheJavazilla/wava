@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
   When updating your version of GWT, you should also update this DTD reference,
   so that your app can take advantage of the latest GWT module capabilities.
@@ -16,7 +16,7 @@
   <!--<inherits name="stdlibport.emul.Emul"/>-->
   <super-source path="emul" />
 
-  <entry-point class='stdlibport.client.Desktop2Web'/>
+  <entry-point class='com.javazilla.wava.client.Desktop2Web'/>
 
   <!-- Specify the paths for translatable code -->
   <source path='client'/>

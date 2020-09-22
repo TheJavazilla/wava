@@ -3,11 +3,11 @@
 
   <!-- POM file generated with GWT webAppCreator -->
   <modelVersion>4.0.0</modelVersion>
-  <groupId>stdlibport</groupId>
+  <groupId>com.javazilla.wava</groupId>
   <artifactId>Desktop2Web</artifactId>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>stdlibport.Desktop2Web</name>
+  <name>com.javazilla.Wava</name>
 
   <properties>
 
@@ -82,7 +82,7 @@
           </execution>
         </executions>
         <configuration>
-          <moduleName>stdlibport.Desktop2Web</moduleName>
+          <moduleName>com.javazilla.wava.Desktop2Web</moduleName>
           <moduleShortName>Desktop2Web</moduleShortName>
           <failOnError>true</failOnError>
           <sourceLevel>1.8</sourceLevel>
